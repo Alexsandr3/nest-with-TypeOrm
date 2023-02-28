@@ -35,6 +35,7 @@ export class Blog {
   bannedUsers: BannedBlogUser[];
   @OneToMany(() => Post, (u) => u.blog)
   posts: Relation<Post[]>;
+
   @OneToOne(() => ImageBlog, (i) => i.blog, { cascade: true, onUpdate: 'CASCADE' })
   @JoinColumn()
   image: ImageBlog;

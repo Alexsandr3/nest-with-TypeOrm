@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, Post, RawBodyRequest, Req } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpCode, Post, RawBodyRequest, Req, UseGuards } from '@nestjs/common';
 import { TelegramUpdateMessage } from './types/telegram-update-message-type';
 import { CommandBus } from '@nestjs/cqrs';
 import { TelegramUpdateMessageCommand } from './application/use-cases/telegram-update-message.command';
@@ -6,6 +6,8 @@ import { IntegrationsService } from './integrations.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import Stripe from 'stripe';
 import { Request } from 'express';
+import { JwtAuthGuard } from '../../guards/jwt-auth-bearer.guard';
+import { CurrentUserIdBlogger } from '../../decorators/current-user-id.param.decorator';
 
 @ApiTags('integrations')
 @Controller('integrations')
@@ -25,10 +27,18 @@ export class IntegrationsController {
   @ApiResponse({ status: 204 })
   @HttpCode(204)
   @Post('telegram/webhook')
-  async forTelegramHook(@Body() payload: TelegramUpdateMessage) {
+  async telegramHook(@Body() payload: TelegramUpdateMessage) {
     console.log('payload------------', payload);
     await this.commandBus.execute(new TelegramUpdateMessageCommand(payload));
     return { here: 'here' };
+  }
+
+  @ApiOperation({ summary: 'Get auth bot link with personal user code inside' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @UseGuards(JwtAuthGuard)
+  @Get('telegram/auth-bot-link')
+  getLinkTelegramBot(@CurrentUserIdBlogger() userId: string) {
+    return { link: 'success' };
   }
 
   @ApiOperation({
@@ -37,7 +47,7 @@ export class IntegrationsController {
   @ApiResponse({ status: 204 })
   @HttpCode(204)
   @Post('telegram/stripe')
-  async forStripeHook(@Req() request: RawBodyRequest<Request>) {
+  async stripeHook(@Req() request: RawBodyRequest<Request>) {
     const signature = request.headers['stripe-signature'];
     const secret = 'whsec_4IYThE5RZiosJTeCPJ6J6d82S9dB2r8j';
     try {

@@ -12,12 +12,16 @@ import { BlogsRepositories } from '../blogs/infrastructure/blogs.repositories';
 import { Blog } from '../../entities/blog.entity';
 import { BannedBlogUser } from '../../entities/banned-blog-user.entity';
 import { ImageBlog } from '../../entities/imageBlog.entity';
+import { JwtAuthGuard } from '../../guards/jwt-auth-bearer.guard';
+import { JwtService } from '../auth/application/jwt.service';
 
-const adapters = [TelegramAdapter, BlogsRepositories];
+const adapters = [TelegramAdapter, BlogsRepositories, JwtService];
 const handlers = [
   //---> integrations
   TelegramUpdateMessageHandler,
 ];
+
+const guards = [JwtAuthGuard];
 
 @Module({
   imports: [
@@ -29,6 +33,6 @@ const handlers = [
     CqrsModule,
   ],
   controllers: [IntegrationsController],
-  providers: [...adapters, ...handlers, IntegrationsService],
+  providers: [...adapters, ...handlers, ...guards, IntegrationsService],
 })
 export class IntegrationsModule {}

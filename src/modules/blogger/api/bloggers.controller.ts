@@ -95,7 +95,8 @@ export class BloggersController {
     @Param(`blogId`, ValidateUuidPipe) blogId: string,
     @UploadedFile(FileSizeValidationImageWallpaperPipe) file: Express.Multer.File,
   ) {
-    return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.originalname, file.buffer));
+    console.log('--------------------------------file', file);
+    // return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.originalname, file.buffer));
   }
 
   @ApiTags('images')

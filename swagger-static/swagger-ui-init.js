@@ -3244,7 +3244,7 @@ window.onload = function() {
       },
       "/integrations/telegram/webhook": {
         "post": {
-          "operationId": "IntegrationsController_forTelegramHook",
+          "operationId": "IntegrationsController_telegramHook",
           "summary": "Webhook for TelegramBot Api (see telegram bot official documentation)",
           "description": "",
           "parameters": [],
@@ -3258,9 +3258,28 @@ window.onload = function() {
           ]
         }
       },
+      "/integrations/telegram/auth-bot-link": {
+        "get": {
+          "operationId": "IntegrationsController_getLinkTelegramBot",
+          "summary": "Get auth bot link with personal user code inside",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          },
+          "tags": [
+            "integrations"
+          ]
+        }
+      },
       "/integrations/telegram/stripe": {
         "post": {
-          "operationId": "IntegrationsController_forStripeHook",
+          "operationId": "IntegrationsController_stripeHook",
           "summary": "Webhook for Stripe Api (see stripeofficial documentation)",
           "description": "",
           "parameters": [],

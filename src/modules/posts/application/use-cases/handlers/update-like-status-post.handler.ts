@@ -24,9 +24,6 @@ export class UpdateLikeStatusPostHandler implements ICommandHandler<UpdateLikeSt
       //save
       newLikePost.updateLikePost(likeStatus);
       await this.postsRepo.saveLikePost(newLikePost);
-      //update likeStatus
-      // createdLikePost.updateLikePost(likeStatus);
-      // await this.postsRepo.saveLikePost(createdLikePost);
       return true;
     }
 
