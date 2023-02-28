@@ -93,11 +93,11 @@ export class BloggersController {
   async uploadPhotoWallpaper(
     @CurrentUserIdBlogger() userId: string,
     @Param(`blogId`, ValidateUuidPipe) blogId: string,
-    @UploadedFile() file: Express.Multer.File,
-    // @UploadedFile(FileSizeValidationImageWallpaperPipe) file: Express.Multer.File,
+    // @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(FileSizeValidationImageWallpaperPipe) file: Express.Multer.File,
   ) {
     console.log('--------------------------------file', file);
-    // return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.originalname, file.buffer));
+    return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.originalname, file.buffer));
   }
 
   @ApiTags('images')

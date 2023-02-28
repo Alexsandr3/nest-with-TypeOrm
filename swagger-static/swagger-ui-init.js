@@ -1473,7 +1473,7 @@ window.onload = function() {
       "/blogger/blogs/{blogId}/images/wallpaper": {
         "post": {
           "operationId": "BloggersController_uploadPhotoWallpaper",
-          "summary": "Upload background wallpaper for Blog (.png or jpg (.ipeg) file (max size is 100KB, width must be 1028, height must be\n312px))",
+          "summary": "",
           "description": "",
           "parameters": [
             {
@@ -1488,7 +1488,7 @@ window.onload = function() {
           "requestBody": {
             "required": true,
             "content": {
-              "multipart/form-data": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -1503,39 +1503,13 @@ window.onload = function() {
           },
           "responses": {
             "200": {
-              "description": "Uploaded image information object",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BlogImagesViewModel"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "The inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResultDto"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "You are not the owner of the blog"
+              "description": ""
             }
           },
           "security": [
             {
               "bearer": []
             }
-          ],
-          "tags": [
-            "images"
           ]
         }
       },
