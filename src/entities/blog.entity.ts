@@ -93,12 +93,7 @@ export class Blog {
     this.banDate = new Date().toISOString();
   }
 
-  async setImageMain(
-    // urlSmallImageMain: { key: string; fieldId: string },
-    urlImageMain: { key: string; fieldId: string },
-    photo: Buffer,
-    // changedBuffer: Buffer,
-  ) {
+  async setImageMain(urlImageMain: { key: string; fieldId: string }, photo: Buffer) {
     if (this.image === null) {
       const instanceImage = ImageBlog.createImageBlog(this.userId, this.id);
       this.image = await instanceImage.setImageMain(urlImageMain, photo);

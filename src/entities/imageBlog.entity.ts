@@ -54,19 +54,11 @@ export class ImageBlog {
     return new ImageBlog(userId, blogId, blog);
   }
 
-  async setImageMain(
-    // smallImageMain: { key: string; fieldId: string },
-    imageMain: { key: string; fieldId: string },
-    photo: Buffer,
-    // changedBuffer: Buffer,
-  ): Promise<ImageBlog> {
+  async setImageMain(imageMain: { key: string; fieldId: string }, photo: Buffer): Promise<ImageBlog> {
     await this.checkingBufferImage156(photo);
     const metadataMainImage = await this.setMetadata(photo);
-    // const metadataMainSmallImage = await this.setMetadata(changedBuffer);
 
     this.setValueImageMain(imageMain.key, imageMain.fieldId, metadataMainImage);
-
-    // this.setValueSmallImageMain(smallImageMain.key, smallImageMain.fieldId, metadataMainSmallImage);
     return this;
   }
 
@@ -129,13 +121,6 @@ export class ImageBlog {
     this.sizeMainImage = metadataMainImage.size;
     this.createdAtImageMain = new Date();
   }
-
-  // private setValueSmallImageMain(key: string, fieldId: string, metadataMainImage: sharp.Metadata) {
-  //   this.keySmallImageMain = key;
-  //   this.fieldIdSmallImageMain = fieldId;
-  //   this.sizeSmallImageMain = metadataMainImage.size;
-  //   this.createdAtSmallImageMain = new Date();
-  // }
 
   private setValueImageWallpaper(key: string, fieldId: string, metadataWallpaperImage: sharp.Metadata) {
     this.keyImageWallpaper = key;
