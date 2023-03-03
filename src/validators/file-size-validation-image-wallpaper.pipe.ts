@@ -17,7 +17,7 @@ export class FileSizeValidationImageWallpaperPipe implements PipeTransform<Expre
     }
     //checking "width" and "height
     const metadata: Metadata = await sharp(image.buffer).metadata();
-    if (metadata.width !== defaultWidth && metadata.height !== defaultHeight) {
+    if (metadata.width !== defaultWidth || metadata.height !== defaultHeight) {
       throw new BadRequestExceptionMY(`The file format is incorrect, please upload the correct file`);
     }
     return image;

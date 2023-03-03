@@ -17,7 +17,7 @@ export class FileSizeValidationImageMainPostPipe implements PipeTransform<Expres
     }
     //checking "width" and "height
     const metadata: Metadata = await sharp(image.buffer).metadata();
-    if (metadata.width !== defaultWidth && metadata.height !== defaultHeight) {
+    if (metadata.width !== defaultWidth || metadata.height !== defaultHeight) {
       throw new BadRequestExceptionMY(`The file format is incorrect, please upload the correct file`);
     }
     //i need use in use case?
