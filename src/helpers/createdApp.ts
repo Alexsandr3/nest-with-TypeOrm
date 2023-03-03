@@ -1,17 +1,12 @@
-import {
-  BadRequestException,
-  INestApplication,
-  ValidationPipe,
-} from '@nestjs/common';
+import { BadRequestException, INestApplication, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import {
-  ErrorExceptionFilter,
-  HttpExceptionFilter,
-} from '../filters/exception.filter';
+import { ErrorExceptionFilter, HttpExceptionFilter } from '../filters/exception.filter';
 import { useContainer } from 'class-validator';
 import { AppModule } from '../app.module';
+import CustomLogger from '../modules/logger/customLogger';
 
 export const createdApp = (app: INestApplication) => {
+  app.useLogger(app.get(CustomLogger));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, //data from input DTO
@@ -38,6 +33,7 @@ export const createdApp = (app: INestApplication) => {
   app.enableCors({});
   app.use(cookieParser());
   app.useGlobalFilters(new ErrorExceptionFilter(), new HttpExceptionFilter());
+
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   return app;
 };

@@ -13,11 +13,12 @@ import { BlogViewModel } from './blog-view.dto';
 import { BanInfoType } from '../../../sa-users/infrastructure/query-reposirory/ban-info.dto';
 import { ImageBlog } from '../../../../entities/imageBlog.entity';
 import { BlogImagesViewModel, PhotoSizeModel } from '../../../blogger/infrastructure/blog-images-view.dto';
-import { SubscriptionStatuses, SubscriptionToBlog } from '../../../../entities/subscription.entity';
+import { SubscriptionToBlog } from '../../../../entities/subscription.entity';
 import { BloggerViewModel } from './blogger-view.dto';
 
 @Injectable()
 export class BlogsQueryRepositories {
+  // private readonly logger = new Logger(BlogsQueryRepositories.name);
   constructor(
     @InjectRepository(Blog)
     private readonly blogRepo: Repository<Blog>,
@@ -78,7 +79,7 @@ export class BlogsQueryRepositories {
   }
 
   private async mapperBlog(blog: Blog, userId?: string | null): Promise<BlogViewModel> {
-    const subscription = await this.subscriptionToBlogRepo.findOneBy({ userId: userId, blogId: blog.id });
+    // const subscription = await this.subscriptionToBlogRepo.findOneBy({ userId: userId, blogId: blog.id });
     // const currentUserSubscriptionStatus = userId ? subscription.status : SubscriptionStatuses.None;
     let images: BlogImagesViewModel;
     if (blog.image === null) {
@@ -198,7 +199,10 @@ export class BlogsQueryRepositories {
       where: { id: blogId, isBanned: false },
     });
 
-    if (!blog) throw new NotFoundExceptionMY(`Not found current blog with id: ${blogId}`);
+    if (!blog) {
+      // this.logger.warn('Tried to access a blog that does not exist');
+      throw new NotFoundExceptionMY(`Not found current blog with id: ${blogId}`);
+    }
     return this.mapperBlog(blog, userId);
   }
 

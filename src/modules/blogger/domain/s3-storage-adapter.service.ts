@@ -1,17 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import {
-  DeleteBucketCommand,
-  DeleteObjectCommand,
-  GetObjectCommand,
-  GetObjectCommandOutput,
-  PutObjectCommand,
-  PutObjectCommandOutput,
-  S3Client,
-} from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, PutObjectCommand, PutObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
 import { ConfigService } from '@nestjs/config';
 import { ConfigType } from '../../../config/configuration';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { reSizeImage } from '../../../helpers/re-size.image';
 
 @Injectable()
 export class S3StorageAdapter {
@@ -36,7 +26,7 @@ export class S3StorageAdapter {
     });
   }
 
-  async saveFile(userId: string, photo: Buffer, key: string) {
+  async saveFile(userId: string, photo: Buffer, key: string, mimetype: string) {
     const bucketParams = {
       Bucket: this.bucket,
       // Specify the name of the new object. For example, 'index.html'.
@@ -44,19 +34,12 @@ export class S3StorageAdapter {
       Key: key,
       // Content of the new object.
       Body: photo,
-      ContentType: 'image/png',
+      ContentType: mimetype, //'image/png',
     };
     const command = new PutObjectCommand(bucketParams);
-    const getCommand = new GetObjectCommand(bucketParams);
-    // console.log('endpoint', this.endpoint);
-    // console.log('bucketParams.Key', bucketParams.Key);
     try {
       const uploadResult: PutObjectCommandOutput = await this.s3Client.send(command);
-      // const uploadResultGet: GetObjectCommandOutput = await this.s3Client.send(getCommand);
-      // console.log('Successfully uploaded object: ' + bucketParams.Bucket + '/' + bucketParams.Key);
-      // const url = await getSignedUrl(this.s3Client, getCommand, { expiresIn: 14400 });
       return {
-        // url: url,
         key: `${this.endpoint}/${key}`,
         fieldId: uploadResult.ETag.slice(1, -1),
       };

@@ -16,7 +16,7 @@ export class UploadImageMainHandler implements ICommandHandler<UploadImageMainCo
   ) {}
 
   async execute(command: UploadImageMainCommand): Promise<BlogImagesViewModel> {
-    const { userId, blogId, photo } = command;
+    const { userId, blogId, photo, mimetype } = command;
     const blog = await this.blogsRepo.findBlogWithRelations(blogId);
     if (!blog) throw new NotFoundExceptionMY(`Not found blog with id: ${blogId}`);
     if (!blog.checkOwner(userId)) throw new ForbiddenExceptionMY(`You are not the owner of the blog`);
@@ -26,8 +26,8 @@ export class UploadImageMainHandler implements ICommandHandler<UploadImageMainCo
     const changedBuffer = await reSizeImage(photo, 48, 48);
     //save on s3 storage
     const [urlSmallImageMain, urlImageMain] = await Promise.all([
-      this.storageS3.saveFile(userId, changedBuffer, keySmallImage),
-      this.storageS3.saveFile(userId, photo, keyImage),
+      this.storageS3.saveFile(userId, changedBuffer, keySmallImage, mimetype),
+      this.storageS3.saveFile(userId, photo, keyImage, mimetype),
     ]);
     //creating instance main image
     await blog.setImageMain(urlSmallImageMain, urlImageMain, photo, changedBuffer);

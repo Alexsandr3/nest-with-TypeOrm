@@ -16,6 +16,7 @@ import { Game } from '../../entities/game.entity';
 import { ImageBlog } from '../../entities/imageBlog.entity';
 import { ImagePost } from '../../entities/imagePost.entity';
 import { SubscriptionToBlog } from '../../entities/subscription.entity';
+import Log from '../logger/log.entity';
 
 @Injectable()
 export class TestingService {
@@ -27,6 +28,7 @@ export class TestingService {
   async deleteAll() {
     await this.userRepo.manager.connection
       .transaction(async (manager) => {
+        await manager.delete(Log, {});
         await manager.delete(Answer, {});
         await manager.delete(Question, {});
         await manager.delete(Game, {});

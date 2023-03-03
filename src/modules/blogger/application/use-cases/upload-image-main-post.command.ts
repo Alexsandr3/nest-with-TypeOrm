@@ -3,7 +3,7 @@ export class UploadImageMainPostCommand {
     public readonly userId: string,
     public readonly blogId: string,
     public readonly postId: string,
-    public readonly originalname: string,
+    public readonly mimetype: string,
     public readonly photo: Buffer,
   ) {}
 }

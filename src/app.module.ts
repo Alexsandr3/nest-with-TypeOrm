@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MailModule } from './modules/mail/mail.module';
@@ -103,6 +103,9 @@ import { UnsubscriptionToBlogHandler } from './modules/blogs/application/use-cas
 import { SubscriptionToBlogHandler } from './modules/blogs/application/use-cases/handlers/subscription-to-blog.handler';
 import { SubscriptionToBlog } from './entities/subscription.entity';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import LogsMiddleware from './utils/logs.middleware';
+import DatabaseLogger from './utils/databaseLogger';
+import { LoggerModule } from './modules/logger/logger.module';
 
 const controllers = [
   AuthController,
@@ -240,7 +243,8 @@ const entities = [
         const database = configService.get('database', { infer: true });
         return {
           type: 'postgres',
-          entities: [...entities],
+          logger: new DatabaseLogger(),
+          // entities: [...entities],
           url: database.PGSQL_URL,
           autoLoadEntities: true,
           synchronize: true,
@@ -259,8 +263,13 @@ const entities = [
     CqrsModule,
     TestingModule,
     IntegrationsModule,
+    LoggerModule,
   ],
   controllers: [AppController, ...controllers],
   providers: [...providers, ...guards, ...adapters, ...handlers],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogsMiddleware).forRoutes('*');
+  }
+}

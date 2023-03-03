@@ -15,13 +15,13 @@ export class UploadImageWallpaperHandler implements ICommandHandler<UploadImageW
   ) {}
 
   async execute(command: UploadImageWallpaperCommand): Promise<BlogImagesViewModel> {
-    const { userId, blogId, photo } = command;
+    const { userId, blogId, photo, mimetype } = command;
     const blog = await this.blogsRepo.findBlogWithRelations(blogId);
     if (!blog) throw new NotFoundExceptionMY(`Not found blog with id: ${blogId}`);
     if (!blog.checkOwner(userId)) throw new ForbiddenExceptionMY(`You are not the owner of the blog`);
     const key = `blogger/${userId}/wallpaper/${blogId}-1028x312.png`;
     //save on s3 storage
-    const urlImageWallpaper = await this.storageS3.saveFile(userId, photo, key);
+    const urlImageWallpaper = await this.storageS3.saveFile(userId, photo, key, mimetype);
     //creating instance main image
     await blog.setImageWallpaper(urlImageWallpaper, photo);
     //save

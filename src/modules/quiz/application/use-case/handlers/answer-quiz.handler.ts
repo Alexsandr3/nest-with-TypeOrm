@@ -25,7 +25,7 @@ export class AnswerQuizHandler implements ICommandHandler<AnswerQuizCommand> {
     }
   }
 
-  @Cron(CronExpression.EVERY_SECOND)
+  // @Cron(CronExpression.EVERY_SECOND)
   private async forcedFinishGames() {
     try {
       const games = await this.quizRepo.forcedFinishGame(); //select for update

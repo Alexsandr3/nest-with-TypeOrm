@@ -64,20 +64,20 @@ export class BloggersController {
     private commandBus: CommandBus,
   ) {}
 
-  // @ApiTags('images')
-  // @ApiOperation({
-  //   summary:
-  //     'Upload background wallpaper for Blog (.png or jpg (.ipeg) file (max size is 100KB, width must be 1028, height must be\n' +
-  //     '312px))',
-  // })
-  // @ApiResponse({ status: 200, description: 'Uploaded image information object', type: BlogImagesViewModel })
-  // @ApiResponse({ status: 400, description: 'The inputModel has incorrect values', type: ApiErrorResultDto })
-  // @ApiResponse({ status: 401, description: 'Unauthorized' })
-  // @ApiResponse({ status: 403, description: 'You are not the owner of the blog' })
+  @ApiTags('images')
+  @ApiOperation({
+    summary:
+      'Upload background wallpaper for Blog (.png or jpg (.ipeg) file (max size is 100KB, width must be 1028, height must be\n' +
+      '312px))',
+  })
+  @ApiResponse({ status: 200, description: 'Uploaded image information object', type: BlogImagesViewModel })
+  @ApiResponse({ status: 400, description: 'The inputModel has incorrect values', type: ApiErrorResultDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'You are not the owner of the blog' })
   @Post('blogs/:blogId/images/wallpaper')
   @HttpCode(200)
   @UseInterceptors(FileInterceptor('file'))
-  // @ApiConsumes('multipart/form-data')
+  @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
       type: 'object',
@@ -93,11 +93,9 @@ export class BloggersController {
   async uploadPhotoWallpaper(
     @CurrentUserIdBlogger() userId: string,
     @Param(`blogId`, ValidateUuidPipe) blogId: string,
-    // @UploadedFile() file: Express.Multer.File,
     @UploadedFile(FileSizeValidationImageWallpaperPipe) file: Express.Multer.File,
   ) {
-    console.log('--------------------------------file', file);
-    return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.originalname, file.buffer));
+    return await this.commandBus.execute(new UploadImageWallpaperCommand(userId, blogId, file.mimetype, file.buffer));
   }
 
   @ApiTags('images')
@@ -130,7 +128,7 @@ export class BloggersController {
     @Param(`blogId`, ValidateUuidPipe) blogId: string,
     @UploadedFile(FileSizeValidationImageMainPipe) file: Express.Multer.File,
   ) {
-    return await this.commandBus.execute(new UploadImageMainCommand(userId, blogId, file.originalname, file.buffer));
+    return await this.commandBus.execute(new UploadImageMainCommand(userId, blogId, file.mimetype, file.buffer));
   }
 
   @ApiTags('images')
@@ -164,7 +162,7 @@ export class BloggersController {
     @Param(`postId`, ValidateUuidPipe) postId: string,
     @UploadedFile(FileSizeValidationImageMainPostPipe) file: Express.Multer.File,
   ): Promise<PostImagesViewModel> {
-    return await this.commandBus.execute(new UploadImageMainPostCommand(userId, blogId, postId, file.originalname, file.buffer));
+    return await this.commandBus.execute(new UploadImageMainPostCommand(userId, blogId, postId, file.mimetype, file.buffer));
   }
 
   @ApiTags('Blogger-Blogs')

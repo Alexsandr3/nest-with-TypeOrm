@@ -20,7 +20,7 @@ export class UploadImageMainPostHandler implements ICommandHandler<UploadImageMa
   ) {}
 
   async execute(command: UploadImageMainPostCommand): Promise<PostImagesViewModel> {
-    const { userId, blogId, postId, photo } = command;
+    const { userId, blogId, postId, photo, mimetype } = command;
     //finding blog
     const blog = await this.blogsRepo.findBlog(blogId);
     if (!blog) throw new NotFoundExceptionMY(`Not found blog with id: ${blogId}`);
@@ -36,9 +36,9 @@ export class UploadImageMainPostHandler implements ICommandHandler<UploadImageMa
     const smallPhoto = await reSizeImage(photo, 149, 96);
     //save on s3 storage
     const [urlImageMain, urlMiddleImageMain, urlSmallImageMain] = await Promise.all([
-      this.storageS3.saveFile(userId, photo, key),
-      this.storageS3.saveFile(userId, photo, keyMiddle),
-      this.storageS3.saveFile(userId, photo, keySmall),
+      this.storageS3.saveFile(userId, photo, key, mimetype),
+      this.storageS3.saveFile(userId, photo, keyMiddle, mimetype),
+      this.storageS3.saveFile(userId, photo, keySmall, mimetype),
     ]);
     //creating instance main image
     await post.setImageMain(urlImageMain, urlMiddleImageMain, urlSmallImageMain, photo, middlePhoto, smallPhoto);

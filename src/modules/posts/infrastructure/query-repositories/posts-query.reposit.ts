@@ -81,7 +81,7 @@ export class PostsQueryRepositories {
         images,
       );
     }
-    const imageMain = new PhotoSizeModel(post.image.keyImageMain, 940, 423, post.image.sizeMainImage);
+    const imageMain = new PhotoSizeModel(post.image.keyImageMain, 940, 432, post.image.sizeMainImage);
     const imageMiddle = new PhotoSizeModel(post.image.keyMiddleImageMain, 300, 180, post.image.sizeMiddleImageMain);
     const imageSmall = new PhotoSizeModel(post.image.keySmallImageMain, 149, 96, post.image.sizeSmallImageMain);
     const images = new PostImagesViewModel([imageMain, imageMiddle, imageSmall]);
