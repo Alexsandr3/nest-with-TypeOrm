@@ -21,16 +21,16 @@ export class UploadImageMainHandler implements ICommandHandler<UploadImageMainCo
     if (!blog) throw new NotFoundExceptionMY(`Not found blog with id: ${blogId}`);
     if (!blog.checkOwner(userId)) throw new ForbiddenExceptionMY(`You are not the owner of the blog`);
     const keyImage = `blogger/${userId}/blog/${blogId}_main_156x156.png`;
-    const keySmallImage = `blogger/${userId}/blog/${blogId}_main_48x48.png`;
+    // const keySmallImage = `blogger/${userId}/blog/${blogId}_main_48x48.png`;
     //changing size
-    const changedBuffer = await reSizeImage(photo, 48, 48);
+    // const changedBuffer = await reSizeImage(photo, 48, 48);
     //save on s3 storage
-    const [urlSmallImageMain, urlImageMain] = await Promise.all([
-      this.storageS3.saveFile(userId, changedBuffer, keySmallImage, mimetype),
+    const [urlSmallImageMain] = await Promise.all([
+      // this.storageS3.saveFile(userId, changedBuffer, keySmallImage, mimetype),
       this.storageS3.saveFile(userId, photo, keyImage, mimetype),
     ]);
     //creating instance main image
-    await blog.setImageMain(urlSmallImageMain, urlImageMain, photo, changedBuffer);
+    await blog.setImageMain(urlSmallImageMain, photo);
     //save
     const savedBlog = await this.blogsRepo.saveBlog(blog);
     //return for view

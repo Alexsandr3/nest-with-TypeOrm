@@ -94,17 +94,17 @@ export class Blog {
   }
 
   async setImageMain(
-    urlSmallImageMain: { key: string; fieldId: string },
+    // urlSmallImageMain: { key: string; fieldId: string },
     urlImageMain: { key: string; fieldId: string },
     photo: Buffer,
-    changedBuffer: Buffer,
+    // changedBuffer: Buffer,
   ) {
     if (this.image === null) {
       const instanceImage = ImageBlog.createImageBlog(this.userId, this.id);
-      this.image = await instanceImage.setImageMain(urlSmallImageMain, urlImageMain, photo, changedBuffer);
+      this.image = await instanceImage.setImageMain(urlImageMain, photo);
       return;
     }
-    await this.image.setImageMain(urlSmallImageMain, urlImageMain, photo, changedBuffer);
+    await this.image.setImageMain(urlImageMain, photo);
     return;
   }
 

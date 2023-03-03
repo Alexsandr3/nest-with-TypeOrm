@@ -21,15 +21,15 @@ export class ImageBlog {
   @Column({ type: 'timestamptz', default: null })
   createdAtImageMain: Date; //Date when first player initialized the pair
 
-  //---image 48x48 -----------
-  @Column({ type: 'character varying', default: null })
-  keySmallImageMain: string;
-  @Column({ type: 'int', default: null })
-  sizeSmallImageMain: number;
-  @Column({ type: 'character varying', default: null })
-  fieldIdSmallImageMain: string;
-  @Column({ type: 'timestamptz', default: null })
-  createdAtSmallImageMain: Date; //Date when first player initialized the pair
+  // //---image 48x48 -----------
+  // @Column({ type: 'character varying', default: null })
+  // keySmallImageMain: string;
+  // @Column({ type: 'int', default: null })
+  // sizeSmallImageMain: number;
+  // @Column({ type: 'character varying', default: null })
+  // fieldIdSmallImageMain: string;
+  // @Column({ type: 'timestamptz', default: null })
+  // createdAtSmallImageMain: Date; //Date when first player initialized the pair
 
   //---image 1028x312 -----------
   @Column({ type: 'character varying', default: null })
@@ -55,18 +55,18 @@ export class ImageBlog {
   }
 
   async setImageMain(
-    smallImageMain: { key: string; fieldId: string },
+    // smallImageMain: { key: string; fieldId: string },
     imageMain: { key: string; fieldId: string },
     photo: Buffer,
-    changedBuffer: Buffer,
+    // changedBuffer: Buffer,
   ): Promise<ImageBlog> {
     await this.checkingBufferImage156(photo);
     const metadataMainImage = await this.setMetadata(photo);
-    const metadataMainSmallImage = await this.setMetadata(changedBuffer);
+    // const metadataMainSmallImage = await this.setMetadata(changedBuffer);
 
     this.setValueImageMain(imageMain.key, imageMain.fieldId, metadataMainImage);
 
-    this.setValueSmallImageMain(smallImageMain.key, smallImageMain.fieldId, metadataMainSmallImage);
+    // this.setValueSmallImageMain(smallImageMain.key, smallImageMain.fieldId, metadataMainSmallImage);
     return this;
   }
 
@@ -130,12 +130,12 @@ export class ImageBlog {
     this.createdAtImageMain = new Date();
   }
 
-  private setValueSmallImageMain(key: string, fieldId: string, metadataMainImage: sharp.Metadata) {
-    this.keySmallImageMain = key;
-    this.fieldIdSmallImageMain = fieldId;
-    this.sizeSmallImageMain = metadataMainImage.size;
-    this.createdAtSmallImageMain = new Date();
-  }
+  // private setValueSmallImageMain(key: string, fieldId: string, metadataMainImage: sharp.Metadata) {
+  //   this.keySmallImageMain = key;
+  //   this.fieldIdSmallImageMain = fieldId;
+  //   this.sizeSmallImageMain = metadataMainImage.size;
+  //   this.createdAtSmallImageMain = new Date();
+  // }
 
   private setValueImageWallpaper(key: string, fieldId: string, metadataWallpaperImage: sharp.Metadata) {
     this.keyImageWallpaper = key;

@@ -20,7 +20,7 @@ export class FileSizeValidationImageMainPipe implements PipeTransform<Express.Mu
     if (metadata.width !== defaultWidth && metadata.height !== defaultHeight) {
       throw new BadRequestExceptionMY(`The file format is incorrect, please upload the correct file`);
     }
-    //i need use in use case?
+    //I need use in use case?
     // await reSizeImage(image.buffer, 156, 156);
     return image;
   }

@@ -63,8 +63,8 @@ export class BlogsQueryRepositories {
     const imageWallpaperDefault = new PhotoSizeModel(blog.image.keyImageWallpaper, 1028, 312, blog.image.sizeImageWallpaper);
     const imageWallpaper = blog.image.keyImageWallpaper ? imageWallpaperDefault : null;
     const imageMainDefault = new PhotoSizeModel(blog.image.keyImageMain, 156, 156, blog.image.sizeMainImage);
-    const imageSmallMainDefault = new PhotoSizeModel(blog.image.keySmallImageMain, 48, 48, blog.image.sizeSmallImageMain);
-    const imageMain = blog.image.keyImageMain ? [imageMainDefault, imageSmallMainDefault] : [];
+    // const imageSmallMainDefault = new PhotoSizeModel(blog.image.keySmallImageMain, 48, 48, blog.image.sizeSmallImageMain);
+    const imageMain = blog.image.keyImageMain ? [imageMainDefault] : [];
     images = new BlogImagesViewModel(imageWallpaper, imageMain);
     return new BloggerViewModel(
       blog.id,
@@ -99,8 +99,8 @@ export class BlogsQueryRepositories {
     const imageWallpaperDefault = new PhotoSizeModel(blog.image.keyImageWallpaper, 1028, 312, blog.image.sizeImageWallpaper);
     const imageWallpaper = blog.image.keyImageWallpaper ? imageWallpaperDefault : null;
     const imageMainDefault = new PhotoSizeModel(blog.image.keyImageMain, 156, 156, blog.image.sizeMainImage);
-    const imageSmallMainDefault = new PhotoSizeModel(blog.image.keySmallImageMain, 48, 48, blog.image.sizeSmallImageMain);
-    const imageMain = blog.image.keyImageMain ? [imageMainDefault, imageSmallMainDefault] : [];
+    // const imageSmallMainDefault = new PhotoSizeModel(blog.image.keySmallImageMain, 48, 48, blog.image.sizeSmallImageMain);
+    const imageMain = blog.image.keyImageMain ? [imageMainDefault] : [];
     images = new BlogImagesViewModel(imageWallpaper, imageMain);
     return new BlogViewModel(
       blog.id,
@@ -268,8 +268,8 @@ export class BlogsQueryRepositories {
     }
 
     const photoInfoMain = new PhotoSizeModel(imageBlogInfo.keyImageMain, 156, 156, imageBlogInfo.sizeMainImage);
-    const photoInfoReducedMain = new PhotoSizeModel(imageBlogInfo.keySmallImageMain, 48, 48, imageBlogInfo.sizeSmallImageMain);
-    return new BlogImagesViewModel(photoInfoWallpaper, [photoInfoMain, photoInfoReducedMain]);
+    // const photoInfoReducedMain = new PhotoSizeModel(imageBlogInfo.keySmallImageMain, 48, 48, imageBlogInfo.sizeSmallImageMain);
+    return new BlogImagesViewModel(photoInfoWallpaper, [photoInfoMain]);
   }
 
   async getImageWallpaper(blogId: string): Promise<BlogImagesViewModel> {
@@ -279,8 +279,8 @@ export class BlogsQueryRepositories {
     let photoInfoMain = [];
     if (imageBlogInfo.keyImageMain !== null) {
       const infoMain = new PhotoSizeModel(imageBlogInfo.keyImageMain, 156, 156, imageBlogInfo.sizeMainImage);
-      const infoReducedMain = new PhotoSizeModel(imageBlogInfo.keySmallImageMain, 48, 48, imageBlogInfo.sizeSmallImageMain);
-      photoInfoMain = [infoMain, infoReducedMain];
+      // const infoReducedMain = new PhotoSizeModel(imageBlogInfo.keySmallImageMain, 48, 48, imageBlogInfo.sizeSmallImageMain);
+      photoInfoMain = [infoMain];
     }
     const photoInfoWallpaper = new PhotoSizeModel(imageBlogInfo.keyImageWallpaper, 1028, 312, imageBlogInfo.sizeImageWallpaper);
     return new BlogImagesViewModel(photoInfoWallpaper, photoInfoMain);
