@@ -28,7 +28,7 @@ export class TestingService {
   async deleteAll() {
     await this.userRepo.manager.connection
       .transaction(async (manager) => {
-        await manager.delete(Log, {});
+        // await manager.delete(Log, {});
         await manager.delete(Answer, {});
         await manager.delete(Question, {});
         await manager.delete(Game, {});
