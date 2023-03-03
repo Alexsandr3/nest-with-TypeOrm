@@ -21,7 +21,7 @@ async function bootstrap() {
   const finishedApp = createdApp(app);
   getSetupSwagger(finishedApp);
   await finishedApp.listen(port).then(async () => console.log(`Server is listening on ${await app.getUrl()}`));
-  //-----------------------------> telegram
+  //for -----------------------------> telegram
   const development = configService.get('dev', { infer: true });
   let baseUrl = development.CURRENT_APP_BASE_URL;
   const telegramAdapter = await app.resolve(TelegramAdapter);
@@ -32,7 +32,7 @@ async function bootstrap() {
     .setWebhook(baseUrl + '/integrations/telegram/webhook')
     .then(async () => console.log(`Server is listening port NGROK on__ ${baseUrl + '/integrations/telegram/webhook'}`))
     .then(async () => console.log(`Server is listening port NGROK on__ ${baseUrl + '/integrations/notification'}`));
-  //-----------------------------> swagger
+  // for -----------------------------> swagger
   // get the swagger json file (if app is running in development mode)
   const dev = configService.get('dev', { infer: true });
   // get the swagger json file (if app is running in development mode)
