@@ -37,8 +37,8 @@ export class UploadImageMainPostHandler implements ICommandHandler<UploadImageMa
     //save on s3 storage
     const [urlImageMain, urlMiddleImageMain, urlSmallImageMain] = await Promise.all([
       this.storageS3.saveFile(userId, photo, key, mimetype),
-      this.storageS3.saveFile(userId, photo, keyMiddle, mimetype),
-      this.storageS3.saveFile(userId, photo, keySmall, mimetype),
+      this.storageS3.saveFile(userId, middlePhoto, keyMiddle, mimetype),
+      this.storageS3.saveFile(userId, smallPhoto, keySmall, mimetype),
     ]);
     //creating instance main image
     await post.setImageMain(urlImageMain, urlMiddleImageMain, urlSmallImageMain, photo, middlePhoto, smallPhoto);

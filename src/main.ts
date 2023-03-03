@@ -9,14 +9,13 @@ import { getSetupSwagger } from './swagger/getSetupSwagger';
 import { TelegramAdapter } from './modules/integrations/adapters/telegram.adapter';
 import process from 'process';
 import * as ngrok from 'ngrok';
-import getLogLevels from './utils/getLogLevels';
 
 async function connectToNgrok(port: number) {
   return await ngrok.connect({ authtoken: process.env.TOKEN_NGROK, addr: port });
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true, rawBody: true, logger: getLogLevels(false) });
+  const app = await NestFactory.create(AppModule, { cors: true, rawBody: true, bufferLogs: true });
   const configService = app.get(ConfigService<ConfigType>);
   const port = configService.get('PORT', { infer: true });
   const finishedApp = createdApp(app);
