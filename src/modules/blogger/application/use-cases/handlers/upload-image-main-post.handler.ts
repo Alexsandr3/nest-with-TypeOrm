@@ -31,7 +31,7 @@ export class UploadImageMainPostHandler implements ICommandHandler<UploadImageMa
     const key = `blogger/${userId}/blog/${blogId}/post/${postId}_main_940x432.png`;
     const keyMiddle = `blogger/${userId}/blog/${blogId}/post/${postId}_main_300x180.png`;
     const keySmall = `blogger/${userId}/blog/${blogId}/post/${postId}_main_149x96.png`;
-    //changing size
+    //changing size image
     const middlePhoto = await reSizeImage(photo, 300, 180);
     const smallPhoto = await reSizeImage(photo, 149, 96);
     //save on s3 storage
