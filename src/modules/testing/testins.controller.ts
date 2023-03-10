@@ -12,6 +12,7 @@ export class TestingController {
   @Delete(`/all-data`)
   @HttpCode(204)
   async deleteDB() {
-    return await this.testingService.deleteAll();
+    return await this.testingService.truncateDBTables();
+    // return await this.testingService.deleteAll();
   }
 }

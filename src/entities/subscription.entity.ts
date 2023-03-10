@@ -15,7 +15,7 @@ export class SubscriptionToBlog {
   blogId: string;
   @Column({ type: 'uuid' })
   userId: string;
-  @Column({ type: 'int', default: null })
+  @Column({ type: 'bigint', default: null })
   telegramId: number;
   @Column({
     type: 'enum',
@@ -26,14 +26,15 @@ export class SubscriptionToBlog {
   @ManyToOne(() => User, (u) => u.subscriptions)
   user: User;
 
-  constructor(blogId: string, userId: string, user: User) {
+  constructor(blogId: string, userId: string, user: User, telegramId: number) {
     this.blogId = blogId;
     this.userId = userId;
     this.user = user;
+    this.telegramId = telegramId;
   }
 
   static createSubscriptionToBlog(blogId: string, userId: string, user: User) {
-    return new SubscriptionToBlog(blogId, userId, user);
+    return new SubscriptionToBlog(blogId, userId, user, user.telegramId);
   }
 
   subscription() {

@@ -62,4 +62,8 @@ export class UsersRepositories {
     if (!user) return null;
     return user;
   }
+
+  async findUserByAuthTelegramCode(code: string) {
+    return await this.userRepo.findOneBy({ authTelegramCode: code });
+  }
 }

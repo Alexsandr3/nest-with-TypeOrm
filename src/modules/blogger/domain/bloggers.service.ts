@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UploadImageWallpaperCommand } from '../application/use-cases/upload-image-wallpaper.command';
 import path from 'node:path';
 import fs from 'node:fs';
-import { ensureDirSync, saveFileAsync } from '../../../utils/fs-utils';
+import { ensureDirSync } from '../../../utils/fs-utils';
 
 @Injectable()
 export class BloggersService {

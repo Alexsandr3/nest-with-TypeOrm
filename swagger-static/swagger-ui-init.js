@@ -1247,7 +1247,7 @@ window.onload = function() {
       },
       "/blogs": {
         "get": {
-          "operationId": "BlogsController_findBlogs",
+          "operationId": "BlogsGetController_findBlogs",
           "summary": "Returns blogs with pagination",
           "description": "",
           "parameters": [
@@ -1336,7 +1336,7 @@ window.onload = function() {
       },
       "/blogs/{blogId}/posts": {
         "get": {
-          "operationId": "BlogsController_findPosts",
+          "operationId": "BlogsGetController_findPosts",
           "summary": "Returns all posts for specified blog with pagination",
           "description": "",
           "parameters": [
@@ -1437,7 +1437,7 @@ window.onload = function() {
       },
       "/blogs/{id}": {
         "get": {
-          "operationId": "BlogsController_findOne",
+          "operationId": "BlogsGetController_findOne",
           "summary": "Returns blog by id",
           "description": "",
           "parameters": [
@@ -1467,221 +1467,6 @@ window.onload = function() {
           },
           "tags": [
             "Blogs"
-          ]
-        }
-      },
-      "/blogger/blogs/{blogId}/images/wallpaper": {
-        "post": {
-          "operationId": "BloggersController_uploadPhotoWallpaper",
-          "summary": "Upload background wallpaper for Blog (.png or jpg (.ipeg) file (max size is 100KB, width must be 1028, height must be\n312px))",
-          "description": "",
-          "parameters": [
-            {
-              "name": "blogId",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Uploaded image information object",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BlogImagesViewModel"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "The inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResultDto"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "You are not the owner of the blog"
-            }
-          },
-          "security": [
-            {
-              "bearer": []
-            }
-          ],
-          "tags": [
-            "images"
-          ]
-        }
-      },
-      "/blogger/blogs/{blogId}/images/main": {
-        "post": {
-          "operationId": "BloggersController_uploadPhotoMain",
-          "summary": "Upload main square image for Blog (.png or jpg (jpeg) file (max size is 100KB, width must be 156, height must be 156))",
-          "description": "",
-          "parameters": [
-            {
-              "name": "blogId",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Uploaded image information object",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BlogImagesViewModel"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "The inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResultDto"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "You are not the owner of the blog"
-            }
-          },
-          "security": [
-            {
-              "bearer": []
-            }
-          ],
-          "tags": [
-            "images"
-          ]
-        }
-      },
-      "/blogger/blogs/{blogId}/posts/{postId}/images/main": {
-        "post": {
-          "operationId": "BloggersController_uploadPhotoMainPost",
-          "summary": "Upload main image for Post (.png or jpg (.jpeg) file (max size is\n100KB, width must be 940, height must be 432))",
-          "description": "",
-          "parameters": [
-            {
-              "name": "blogId",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "postId",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Uploaded image information object",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/PostImagesViewModel"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "The inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResultDto"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "You are not the owner of the blog"
-            }
-          },
-          "security": [
-            {
-              "bearer": []
-            }
-          ],
-          "tags": [
-            "images"
           ]
         }
       },
@@ -2351,6 +2136,221 @@ window.onload = function() {
           ],
           "tags": [
             "Blogger-Users"
+          ]
+        }
+      },
+      "/blogger/blogs/{blogId}/images/wallpaper": {
+        "post": {
+          "operationId": "BloggersImagesController_uploadPhotoWallpaper",
+          "summary": "Upload background wallpaper for Blog (.png or jpg (.ipeg) file (max size is 100KB, width must be 1028, height must be\n312px))",
+          "description": "",
+          "parameters": [
+            {
+              "name": "blogId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Uploaded image information object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BlogImagesViewModel"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "The inputModel has incorrect values",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResultDto"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "You are not the owner of the blog"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "tags": [
+            "images"
+          ]
+        }
+      },
+      "/blogger/blogs/{blogId}/images/main": {
+        "post": {
+          "operationId": "BloggersImagesController_uploadPhotoMain",
+          "summary": "Upload main square image for Blog (.png or jpg (jpeg) file (max size is 100KB, width must be 156, height must be 156))",
+          "description": "",
+          "parameters": [
+            {
+              "name": "blogId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Uploaded image information object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BlogImagesViewModel"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "The inputModel has incorrect values",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResultDto"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "You are not the owner of the blog"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "tags": [
+            "images"
+          ]
+        }
+      },
+      "/blogger/blogs/{blogId}/posts/{postId}/images/main": {
+        "post": {
+          "operationId": "BloggersImagesController_uploadPhotoMainPost",
+          "summary": "Upload main image for Post (.png or jpg (.jpeg) file (max size is\n100KB, width must be 940, height must be 432))",
+          "description": "",
+          "parameters": [
+            {
+              "name": "blogId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "postId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Uploaded image information object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PostImagesViewModel"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "The inputModel has incorrect values",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResultDto"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "You are not the owner of the blog"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "tags": [
+            "images"
           ]
         }
       },
@@ -3242,44 +3242,9 @@ window.onload = function() {
           ]
         }
       },
-      "/integrations/telegram/webhook": {
-        "post": {
-          "operationId": "IntegrationsController_telegramHook",
-          "summary": "Webhook for TelegramBot Api (see telegram bot official documentation)",
-          "description": "",
-          "parameters": [],
-          "responses": {
-            "204": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "integrations"
-          ]
-        }
-      },
-      "/integrations/telegram/auth-bot-link": {
-        "get": {
-          "operationId": "IntegrationsController_getLinkTelegramBot",
-          "summary": "Get auth bot link with personal user code inside",
-          "description": "",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": ""
-            },
-            "401": {
-              "description": "Unauthorized"
-            }
-          },
-          "tags": [
-            "integrations"
-          ]
-        }
-      },
       "/integrations/telegram/stripe": {
         "post": {
-          "operationId": "IntegrationsController_stripeHook",
+          "operationId": "StripeController_stripeHook",
           "summary": "Webhook for Stripe Api (see stripeofficial documentation)",
           "description": "",
           "parameters": [],
@@ -3295,13 +3260,55 @@ window.onload = function() {
       },
       "/integrations/notification": {
         "get": {
-          "operationId": "IntegrationsController_sendMessage",
+          "operationId": "StripeController_sendMessage",
           "summary": "",
           "description": "",
           "parameters": [],
           "responses": {
             "200": {
               "description": ""
+            }
+          },
+          "tags": [
+            "integrations"
+          ]
+        }
+      },
+      "/integrations/telegram/webhook": {
+        "post": {
+          "operationId": "TelegramController_telegramHook",
+          "summary": "Webhook for TelegramBot Api (see telegram bot official documentation)",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "204": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "integrations"
+          ]
+        }
+      },
+      "/integrations/telegram/auth-bot-link": {
+        "get": {
+          "operationId": "TelegramController_getLinkTelegramBot",
+          "summary": "Get auth bot link with personal user code inside",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
             }
           },
           "tags": [
@@ -3816,6 +3823,17 @@ window.onload = function() {
             },
             "images": {
               "$ref": "#/components/schemas/BlogImagesViewModel"
+            },
+            "currentUserSubscriptionStatus": {
+              "enum": [
+                "Subscribed",
+                "Unsubscribed",
+                "None"
+              ],
+              "type": "string"
+            },
+            "subscribersCount": {
+              "type": "number"
             }
           },
           "required": [
@@ -3825,7 +3843,9 @@ window.onload = function() {
             "websiteUrl",
             "createdAt",
             "isMembership",
-            "images"
+            "images",
+            "currentUserSubscriptionStatus",
+            "subscribersCount"
           ]
         },
         "LikeDetailsViewModel": {

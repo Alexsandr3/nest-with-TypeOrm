@@ -10,8 +10,8 @@ export class BlogViewModel {
   public createdAt: string;
   public isMembership: boolean;
   public images: BlogImagesViewModel;
-  // public currentUserSubscriptionStatus: SubscriptionStatuses;
-  // public subscribersCount: number;
+  public currentUserSubscriptionStatus: SubscriptionStatuses;
+  public subscribersCount: number;
   constructor(
     id: string,
     name: string,
@@ -20,8 +20,8 @@ export class BlogViewModel {
     createdAt: string,
     isMembership: boolean,
     images: BlogImagesViewModel,
-    // currentUserSubscriptionStatus: SubscriptionStatuses,
-    // subscribersCount: number,
+    currentUserSubscriptionStatus: SubscriptionStatuses,
+    subscribersCount: number,
   ) {
     this.id = id;
     this.name = name;
@@ -30,7 +30,7 @@ export class BlogViewModel {
     this.createdAt = createdAt;
     this.isMembership = isMembership;
     this.images = images;
-    // this.currentUserSubscriptionStatus = currentUserSubscriptionStatus;
-    // this.subscribersCount = subscribersCount;
+    this.currentUserSubscriptionStatus = currentUserSubscriptionStatus;
+    this.subscribersCount = subscribersCount;
   }
 }

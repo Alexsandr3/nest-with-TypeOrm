@@ -12,3 +12,13 @@ export const CurrentUserIdBlogger = createParamDecorator((data: unknown, context
   if (!request.userId) throw new UnauthorizedExceptionMY(`UserId didn't come`);
   return request.userId;
 });
+
+//sample of use
+// export const CurrentUser = createParamDecorator((data: keyof User, ct: ExecutionContext) => {
+//   const request = ct.switchToHttp().getRequest();
+//   const user = request.user;
+//   return data ? user[data] : user;
+// });
+
+// using:=====> in controller
+// @CurrentUser('id') userId: number

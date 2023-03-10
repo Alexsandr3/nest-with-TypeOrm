@@ -44,8 +44,10 @@ export class User {
   @Column('boolean', { default: false })
   isConfirmationR: boolean;
   //-------
-  @Column({ type: 'int', default: null })
+  @Column({ type: 'bigint', nullable: true })
   telegramId: number;
+  @Column({ type: 'uuid', default: null })
+  authTelegramCode: string;
   //-------
   @OneToMany(() => Device, (d) => d.user)
   device: Device[];
@@ -60,10 +62,18 @@ export class User {
   @OneToMany(() => LikeComment, (d) => d.user)
   likeComments: LikeComment[];
   //--------
-  @OneToMany(() => SubscriptionToBlog, (d) => d.user, { cascade: true, onUpdate: 'CASCADE' })
+  @OneToMany(() => SubscriptionToBlog, (d) => d.user, {
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
   subscriptions: SubscriptionToBlog[];
 
-  constructor(login: string, email: string, passwordHash: string, isConfirmation: boolean) {
+  constructor(
+    login: string,
+    email: string,
+    passwordHash: string,
+    isConfirmation: boolean,
+  ) {
     this.login = login;
     this.email = email;
     this.passwordHash = passwordHash;
@@ -75,7 +85,12 @@ export class User {
     this.expirationDateR = add(new Date(), { hours: 1 });
   }
 
-  static createUser(login: string, email: string, passwordHash: string, isConfirmation: boolean): User {
+  static createUser(
+    login: string,
+    email: string,
+    passwordHash: string,
+    isConfirmation: boolean,
+  ): User {
     const reg = new RegExp(`^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`);
     if (login.length < 3 && login.length > 10 && !reg.test(email)) {
       throw new Error('Incorrect input data for create User');
@@ -147,7 +162,11 @@ export class User {
     //find blog in subscriptions by blogId
     const currentSubscription = this.subscriptions.find((e) => e.blogId === blogId);
     if (!currentSubscription) {
-      const instanceSubscriptionToBlog = SubscriptionToBlog.createSubscriptionToBlog(blogId, userId, user);
+      const instanceSubscriptionToBlog = SubscriptionToBlog.createSubscriptionToBlog(
+        blogId,
+        userId,
+        user,
+      );
       instanceSubscriptionToBlog.subscription();
       this.subscriptions.push(instanceSubscriptionToBlog);
       return;
@@ -165,5 +184,13 @@ export class User {
     currentSubscription.unSubscription();
     this.subscriptions.push(currentSubscription);
     return;
+  }
+
+  generateAuthCode() {
+    this.authTelegramCode = randomUUID();
+  }
+
+  updateTelegramId(id: number) {
+    this.telegramId = id;
   }
 }

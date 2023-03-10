@@ -3,7 +3,7 @@ import { QuizRepositories } from '../../../infrastructure/quiz-repositories';
 import { ForbiddenExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
 import { AnswerViewModel } from '../../../infrastructure/query-repository/game-view.dto';
 import { AnswerQuizCommand } from '../answer-quiz.command';
-import { Cron, CronExpression } from '@nestjs/schedule';
+// import { Cron, CronExpression } from '@nestjs/schedule';
 
 @CommandHandler(AnswerQuizCommand)
 export class AnswerQuizHandler implements ICommandHandler<AnswerQuizCommand> {
@@ -14,17 +14,27 @@ export class AnswerQuizHandler implements ICommandHandler<AnswerQuizCommand> {
     const { userId } = command;
     try {
       const activeGame = await this.quizRepo.findActiveGameByUserId(userId);
-      if (!activeGame) throw new ForbiddenExceptionMY('Current user is already participating in active pair');
+      if (!activeGame)
+        throw new ForbiddenExceptionMY(
+          'Current user is already participating in active pair',
+        );
       activeGame.startGame(userId, answer);
       await this.quizRepo.saveGame(activeGame);
       const result =
-        activeGame.getIdFirstPlayer() === userId ? activeGame.getLastAnswerFirstPlayer() : activeGame.getLastAnswerSecondPlayer();
-      return new AnswerViewModel(result.questionId, result.answerStatus, result.addedAt.toISOString());
+        activeGame.getIdFirstPlayer() === userId
+          ? activeGame.getLastAnswerFirstPlayer()
+          : activeGame.getLastAnswerSecondPlayer();
+      return new AnswerViewModel(
+        result.questionId,
+        result.answerStatus,
+        result.addedAt.toISOString(),
+      );
     } catch (e) {
     } finally {
     }
   }
 
+  //todo:
   // @Cron(CronExpression.EVERY_SECOND)
   private async forcedFinishGames() {
     try {

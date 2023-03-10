@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Device } from '../../entities/device.entity';
 import { Blog } from '../../entities/blog.entity';
 import { BannedBlogUser } from '../../entities/banned-blog-user.entity';
@@ -16,14 +16,23 @@ import { Game } from '../../entities/game.entity';
 import { ImageBlog } from '../../entities/imageBlog.entity';
 import { ImagePost } from '../../entities/imagePost.entity';
 import { SubscriptionToBlog } from '../../entities/subscription.entity';
-import Log from '../logger/log.entity';
 
 @Injectable()
 export class TestingService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
+    private readonly dataService: DataSource,
   ) {}
+
+  async truncateDBTables(): Promise<void> {
+    const connection = this.dataService;
+    const entities = connection.entityMetadatas;
+    for (const entity of entities) {
+      const repository = connection.getRepository(entity.name);
+      await repository.query(`TRUNCATE TABLE "${entity.tableName}" CASCADE;`);
+    }
+  }
 
   async deleteAll() {
     await this.userRepo.manager.connection

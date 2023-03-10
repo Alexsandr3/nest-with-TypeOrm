@@ -99,13 +99,15 @@ import { ImageBlog } from './entities/imageBlog.entity';
 import { UploadImageMainPostHandler } from './modules/blogger/application/use-cases/handlers/upload-image-main-post.handler';
 import { ImagePost } from './entities/imagePost.entity';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
-import { UnsubscriptionToBlogHandler } from './modules/blogs/application/use-cases/handlers/unsubscription-to-blog.handler';
-import { SubscriptionToBlogHandler } from './modules/blogs/application/use-cases/handlers/subscription-to-blog.handler';
+import { UnsubscriptionToBlogHandler } from './modules/blogs/application/use-cases/unsubscription-to-blog.handler';
+import { SubscriptionToBlogHandler } from './modules/blogs/application/use-cases/subscription-to-blog.handler';
 import { SubscriptionToBlog } from './entities/subscription.entity';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import LogsMiddleware from './utils/logs.middleware';
 import DatabaseLogger from './utils/databaseLogger';
 import { LoggerModule } from './modules/logger/logger.module';
+import { BlogsGetController } from './modules/blogs/api/blogs-get.controller';
+import { BloggersImagesController } from './modules/blogger/api/bloggers-images.controller';
 
 const controllers = [
   AuthController,
@@ -113,7 +115,9 @@ const controllers = [
   SaController,
   DevicesController,
   BlogsController,
+  BlogsGetController,
   BloggersController,
+  BloggersImagesController,
   PostsController,
   CommentsController,
   QuizController,

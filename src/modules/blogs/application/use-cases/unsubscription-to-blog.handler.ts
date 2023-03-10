@@ -1,8 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { NotFoundExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
-import { BlogsRepositories } from '../../../infrastructure/blogs.repositories';
-import { UnsubscriptionToBlogCommand } from '../unsubscription-to-blog.command';
-import { UsersRepositories } from '../../../../sa-users/infrastructure/users-repositories';
+import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { BlogsRepositories } from '../../infrastructure/blogs.repositories';
+import { UsersRepositories } from '../../../sa-users/infrastructure/users-repositories';
+
+export class UnsubscriptionToBlogCommand {
+  constructor(public readonly blogId: string, public readonly userId: string) {}
+}
 
 @CommandHandler(UnsubscriptionToBlogCommand)
 export class UnsubscriptionToBlogHandler implements ICommandHandler<UnsubscriptionToBlogCommand> {
@@ -12,10 +15,12 @@ export class UnsubscriptionToBlogHandler implements ICommandHandler<Unsubscripti
     const { blogId, userId } = command;
     const blog = await this.blogsRepo.findBlog(blogId);
     if (!blog) throw new NotFoundExceptionMY(`Not found blog with id: ${blogId}`);
+    //unsubscribe from blog
     blog.unSubscribe();
-    //user ----->
+    //find user and unsubscribe from blog
     const user = await this.userRepo.findUserById(userId);
     user.unSubscribe(blogId);
+    //save changes
     await this.userRepo.saveUser(user);
     await this.blogsRepo.saveBlog(blog);
     return;
