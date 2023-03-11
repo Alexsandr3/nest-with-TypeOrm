@@ -24,14 +24,14 @@ import {
 } from '@nestjs/swagger';
 import { ApiErrorResultDto } from '../../../common/api-error-result.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadImageWallpaperCommand } from '../application/use-cases/upload-image-wallpaper.command';
 import { BlogImagesViewModel } from '../infrastructure/blog-images-view.dto';
-import { UploadImageMainCommand } from '../application/use-cases/upload-image-main.command';
 import { FileSizeValidationImageMainPipe } from '../../../validators/file-size-validation-image-main.pipe';
 import { FileSizeValidationImageWallpaperPipe } from '../../../validators/file-size-validation-image-wallpaper.pipe';
-import { UploadImageMainPostCommand } from '../application/use-cases/upload-image-main-post.command';
 import { FileSizeValidationImageMainPostPipe } from '../../../validators/file-size-validation-image-main-post.pipe';
 import { PostImagesViewModel } from '../infrastructure/post-images-view.dto';
+import { UploadImageWallpaperCommand } from '../application/use-cases/upload-image-wallpaper.handler';
+import { UploadImageMainCommand } from '../application/use-cases/upload-image-main.handler';
+import { UploadImageMainPostCommand } from '../application/use-cases/upload-image-main-post.handler';
 
 @ApiBearerAuth()
 @SkipThrottle()
@@ -63,7 +63,7 @@ export class BloggersImagesController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'You are not the owner of the blog' })
   @Post('blogs/:blogId/images/wallpaper')
-  @HttpCode(200)
+  @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -106,7 +106,7 @@ export class BloggersImagesController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'You are not the owner of the blog' })
   @Post('blogs/:blogId/images/main')
-  @HttpCode(200)
+  @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -150,7 +150,7 @@ export class BloggersImagesController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'You are not the owner of the blog' })
   @Post('blogs/:blogId/posts/:postId/images/main')
-  @HttpCode(200)
+  @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({

@@ -6,16 +6,12 @@ import * as https from 'https';
 import { OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
-export class IntegrationsService {
+export class TelegramEvent {
   private token = this.configService.get('integrations', { infer: true });
   constructor(
     private readonly blogsRepo: BlogsRepositories,
     private configService: ConfigService<ConfigType>,
   ) {}
-
-  sendMessage() {
-    return { send: 'message---------------000000' };
-  }
 
   @OnEvent('createdNewPost')
   private async notification(blogId: string) {
@@ -28,4 +24,8 @@ export class IntegrationsService {
       await https.get(url);
     }
   }
+
+  // sendMessage() {
+  //   return { send: 'message---------------000000' };
+  // }
 }

@@ -3,11 +3,18 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { HttpException } from '@nestjs/common';
 import { UsersRepositories } from '../../../../sa-users/infrastructure/users-repositories';
 import { MailService } from '../../../../mail/mail.service';
-import { RecoveryCommand } from '../recovery.command';
+import { EmailRecoveryDto } from '../../../api/input-dtos/email-recovery.dto';
+
+export class RecoveryCommand {
+  constructor(public readonly emailInputModel: EmailRecoveryDto) {}
+}
 
 @CommandHandler(RecoveryCommand)
 export class RecoveryHandler implements ICommandHandler<RecoveryCommand> {
-  constructor(private readonly usersRepo: UsersRepositories, private readonly mailService: MailService) {}
+  constructor(
+    private readonly usersRepo: UsersRepositories,
+    private readonly mailService: MailService,
+  ) {}
 
   async execute(command: RecoveryCommand): Promise<boolean> {
     const { email } = command.emailInputModel;
@@ -28,7 +35,10 @@ export class RecoveryHandler implements ICommandHandler<RecoveryCommand> {
         await this.mailService.sendPasswordRecoveryMessage(user.email, user.recoveryCode);
       } catch (error) {
         console.error(error);
-        throw new HttpException('Service is unavailable. Please try again later. We need saved User', 421);
+        throw new HttpException(
+          'Service is unavailable. Please try again later. We need saved User',
+          421,
+        );
       }
       return true;
     }

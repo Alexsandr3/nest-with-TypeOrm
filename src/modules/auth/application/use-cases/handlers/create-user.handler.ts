@@ -4,10 +4,13 @@ import { UsersQueryRepositories } from '../../../../sa-users/infrastructure/quer
 import { MailService } from '../../../../mail/mail.service';
 import { BadRequestExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateUserCommand } from '../create-user.command';
 import { UsersService } from '../../../../sa-users/domain/users.service';
 import { User } from '../../../../../entities/user.entity';
 import { UserViewModel } from '../../../../sa-users/infrastructure/query-reposirory/user-view.dto';
+
+export class CreateUserCommand {
+  constructor(public readonly userInputModel: CreateUserDto) {}
+}
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {

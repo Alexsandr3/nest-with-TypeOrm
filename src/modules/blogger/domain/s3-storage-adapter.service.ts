@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteObjectCommand, PutObjectCommand, PutObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  PutObjectCommandOutput,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { ConfigService } from '@nestjs/config';
 import { ConfigType } from '../../../config/configuration';
 
@@ -48,14 +53,16 @@ export class S3StorageAdapter {
     }
   }
 
-  async delete(userId: string, key: string) {
+  async deleteFile(key: string) {
     const delete_bucket_params = {
       Bucket: this.bucket,
       Key: key,
     };
     try {
-      const data = await this.s3Client.send(new DeleteObjectCommand(delete_bucket_params));
-      // console.log('Success. Object deleted.', data);
+      const data = await this.s3Client.send(
+        new DeleteObjectCommand(delete_bucket_params),
+      );
+      console.log('Success. Object deleted.------------', data);
       return data; // For unit tests.
     } catch (err) {
       console.error('Error', err);

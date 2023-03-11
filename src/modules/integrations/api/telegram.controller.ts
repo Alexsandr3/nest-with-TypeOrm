@@ -30,4 +30,9 @@ export class TelegramController {
   getLinkTelegramBot(@CurrentUserIdBlogger() userId: string) {
     return this.commandBus.execute(new AuthBotLinkCommand(userId));
   }
+
+  // @Get(`notification`)
+  // sendMessage(@Body() inputModel: any) {
+  //   return this.integrationsService.sendMessage();
+  // }
 }

@@ -34,6 +34,8 @@ export const getConfiguration = () => ({
   integrations: {
     TOKEN_NGROK: process.env.TOKEN_NGROK,
     TOKEN_TELEGRAM: process.env.TOKEN_TELEGRAM,
+    API_KEY_STRIPE: process.env.API_KEY_STRIPE,
+    SECRET_HOOK_STRIPE: process.env.SECRET_HOOK_STRIPE,
   },
 });
 

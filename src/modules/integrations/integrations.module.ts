@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { StripeController } from './api/stripe.controller';
-import { TelegramAdapter } from './adapters/telegram.adapter';
 import { TelegramUpdateMessageHandler } from './application/use-cases/telegram-update-message.handler';
 import { CqrsModule } from '@nestjs/cqrs';
-import { IntegrationsService } from './application/integrations.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SubscriptionToBlog } from '../../entities/subscription.entity';
 import { BlogsRepositories } from '../blogs/infrastructure/blogs.repositories';
@@ -16,6 +14,11 @@ import { TelegramController } from './api/telegram.controller';
 import { AuthBotLinkHandler } from './application/use-cases/auth-bot-link.handler';
 import { User } from '../../entities/user.entity';
 import { UsersRepositories } from '../sa-users/infrastructure/users-repositories';
+import { ConfigModule } from '@nestjs/config';
+import { getConfiguration } from '../../config/configuration';
+import { StripeService } from './application/stripe.service';
+import { TelegramEvent } from './application/telegram.event';
+import { TelegramAdapter } from './adapters/telegram.adapter';
 
 const adapters = [TelegramAdapter, BlogsRepositories, UsersRepositories, JwtService];
 const handlers = [
@@ -29,10 +32,10 @@ const guards = [JwtAuthGuard];
 @Module({
   imports: [
     TypeOrmModule.forFeature([SubscriptionToBlog, Blog, BannedBlogUser, ImageBlog, User]),
-    // ConfigModule.forRoot({ isGlobal: true, load: [getConfiguration] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [getConfiguration] }),
     CqrsModule,
   ],
   controllers: [StripeController, TelegramController],
-  providers: [...adapters, ...handlers, ...guards, IntegrationsService],
+  providers: [...adapters, ...handlers, ...guards, TelegramEvent, StripeService],
 })
 export class IntegrationsModule {}

@@ -16,12 +16,18 @@ async function connectToNgrok(port: number) {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true, rawBody: true, logger: getLogLevels(false) });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+    rawBody: true,
+    logger: getLogLevels(false),
+  });
   const configService = app.get(ConfigService<ConfigType>);
   const port = configService.get('PORT', { infer: true });
   const finishedApp = createdApp(app);
   getSetupSwagger(finishedApp);
-  await finishedApp.listen(port).then(async () => console.log(`Server is listening on ${await app.getUrl()}`));
+  await finishedApp
+    .listen(port)
+    .then(async () => console.log(`Server is listening on ${await app.getUrl()}`));
   //for -----------------------------> telegram
   const development = configService.get('dev', { infer: true });
   let baseUrl = development.CURRENT_APP_BASE_URL;
@@ -31,8 +37,18 @@ async function bootstrap() {
   }
   await telegramAdapter
     .setWebhook(baseUrl + '/integrations/telegram/webhook')
-    .then(async () => console.log(`Server is listening port NGROK on__ ${baseUrl + '/integrations/telegram/webhook'}`))
-    .then(async () => console.log(`Server is listening port NGROK on__ ${baseUrl + '/integrations/notification'}`));
+    .then(async () =>
+      console.log(
+        `Server is listening port NGROK on__ ${
+          baseUrl + '/integrations/telegram/webhook'
+        }`,
+      ),
+    )
+    .then(async () =>
+      console.log(
+        `Server is listening port NGROK on__ ${baseUrl + '/integrations/notification'}`,
+      ),
+    );
   // for -----------------------------> swagger
   // get the swagger json file (if app is running in development mode)
   const dev = configService.get('dev', { infer: true });

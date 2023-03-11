@@ -1,7 +1,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlogsRepositories } from '../../../../blogs/infrastructure/blogs.repositories';
-import { DeleteBlogCommand } from '../delete-blog.command';
-import { ForbiddenExceptionMY, NotFoundExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
+import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
+import {
+  ForbiddenExceptionMY,
+  NotFoundExceptionMY,
+} from '../../../../helpers/My-HttpExceptionFilter';
+
+export class DeleteBlogCommand {
+  constructor(public readonly blogId: string, public readonly userId: string) {}
+}
 
 @CommandHandler(DeleteBlogCommand)
 export class DeleteBlogHandler implements ICommandHandler<DeleteBlogCommand> {

@@ -1,7 +1,18 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlogsRepositories } from '../../../../blogs/infrastructure/blogs.repositories';
-import { ForbiddenExceptionMY, NotFoundExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
-import { UpdateBlogCommand } from '../update-blog.command';
+import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
+import {
+  ForbiddenExceptionMY,
+  NotFoundExceptionMY,
+} from '../../../../helpers/My-HttpExceptionFilter';
+import { UpdateBlogDto } from '../../api/input-dtos/update-blog.dto';
+
+export class UpdateBlogCommand {
+  constructor(
+    public readonly userId: string,
+    public readonly blogId: string,
+    public readonly blogInputModel: UpdateBlogDto,
+  ) {}
+}
 
 @CommandHandler(UpdateBlogCommand)
 export class UpdateBlogHandler implements ICommandHandler<UpdateBlogCommand> {

@@ -1,7 +1,11 @@
 import { BadRequestExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersRepositories } from '../../../../sa-users/infrastructure/users-repositories';
-import { ConfirmByCodeCommand } from '../confirmation-by-code.command';
+import { ConfirmationCodeDto } from '../../../api/input-dtos/confirmation-code.dto';
+
+export class ConfirmByCodeCommand {
+  constructor(public readonly codeInputModel: ConfirmationCodeDto) {}
+}
 
 @CommandHandler(ConfirmByCodeCommand)
 export class ConfirmByCodeHandler implements ICommandHandler<ConfirmByCodeCommand> {

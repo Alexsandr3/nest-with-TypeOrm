@@ -2181,6 +2181,16 @@ window.onload = function() {
                 }
               }
             },
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
             "400": {
               "description": "The inputModel has incorrect values",
               "content": {
@@ -2246,6 +2256,16 @@ window.onload = function() {
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/BlogImagesViewModel"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object"
                   }
                 }
               }
@@ -2319,6 +2339,16 @@ window.onload = function() {
           "responses": {
             "200": {
               "description": "Uploaded image information object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PostImagesViewModel"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "",
               "content": {
                 "application/json": {
                   "schema": {
@@ -3242,10 +3272,10 @@ window.onload = function() {
           ]
         }
       },
-      "/integrations/telegram/stripe": {
+      "/integrations/stripe/webhook": {
         "post": {
           "operationId": "StripeController_stripeHook",
-          "summary": "Webhook for Stripe Api (see stripeofficial documentation)",
+          "summary": "Webhook for Stripe Api (see stripe official documentation)",
           "description": "",
           "parameters": [],
           "responses": {
@@ -3258,15 +3288,68 @@ window.onload = function() {
           ]
         }
       },
-      "/integrations/notification": {
+      "/integrations/stripe/buy": {
         "get": {
-          "operationId": "StripeController_sendMessage",
+          "operationId": "StripeController_buy",
           "summary": "",
           "description": "",
           "parameters": [],
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "integrations"
+          ]
+        }
+      },
+      "/integrations/stripe/success": {
+        "get": {
+          "operationId": "StripeController_success",
+          "summary": "",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "integrations"
+          ]
+        }
+      },
+      "/integrations/stripe/cancel": {
+        "get": {
+          "operationId": "StripeController_cancel",
+          "summary": "",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           },
           "tags": [

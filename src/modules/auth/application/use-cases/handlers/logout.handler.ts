@@ -1,7 +1,11 @@
 import { UnauthorizedExceptionMY } from '../../../../../helpers/My-HttpExceptionFilter';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { LogoutCommand } from '../logout.command';
 import { DeviceRepositories } from '../../../../security/infrastructure/device-repositories';
+import { PayloadType } from '../../payloadType';
+
+export class LogoutCommand {
+  constructor(public readonly payloadRefresh: PayloadType) {}
+}
 
 @CommandHandler(LogoutCommand)
 export class LogoutHandler implements ICommandHandler<LogoutCommand> {
@@ -11,7 +15,11 @@ export class LogoutHandler implements ICommandHandler<LogoutCommand> {
     const { userId, deviceId, iat } = command.payloadRefresh;
     const dateCreatedToken = new Date(iat * 1000).toISOString();
     //search device
-    const foundDevice = await this.deviceRepo.findDeviceForDelete(userId, deviceId, dateCreatedToken);
+    const foundDevice = await this.deviceRepo.findDeviceForDelete(
+      userId,
+      deviceId,
+      dateCreatedToken,
+    );
     if (!foundDevice) throw new UnauthorizedExceptionMY('not today sorry man');
     //removing device
     const isDeleted = await this.deviceRepo.deleteDevice(userId, deviceId);

@@ -20,7 +20,7 @@ export class AuthBotLinkHandler implements ICommandHandler<AuthBotLinkCommand> {
     //generate auth code
     user.generateAuthCode();
     await this.usersRepository.saveUser(user);
-    //return link
-    return { link: `code=${user.authTelegramCode}` };
+    //return link https://t.me/имя_вашего_бота?start=start
+    return { link: `https://t.me/san_bla_bot?start=start code=${user.authTelegramCode}` };
   }
 }

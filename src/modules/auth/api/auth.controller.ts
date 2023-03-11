@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Request, HttpCode, UseGuards, Res, Ip } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  HttpCode,
+  UseGuards,
+  Res,
+  Ip,
+} from '@nestjs/common';
 import { CreateUserDto } from '../../sa-users/api/input-Dto/create-User.dto';
 import { ConfirmationCodeDto } from './input-dtos/confirmation-code.dto';
 import { LoginDto } from './input-dtos/login.dto';
@@ -14,29 +24,44 @@ import { MeViewDto } from '../infrastructure/me-view.dto';
 import { CurrentUserId } from '../../../decorators/current-user-id.param.decorator';
 import { SkipThrottle } from '@nestjs/throttler';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateUserCommand } from '../application/use-cases/create-user.command';
-import { LogoutCommand } from '../application/use-cases/logout.command';
-import { ResendingCommand } from '../application/use-cases/resending.command';
-import { ConfirmByCodeCommand } from '../application/use-cases/confirmation-by-code.command';
-import { NewPasswordCommand } from '../application/use-cases/new-password.command';
-import { RecoveryCommand } from '../application/use-cases/recovery.command';
-import { LoginCommand } from '../application/use-cases/login.command';
-import { RefreshCommand } from '../application/use-cases/refresh.command';
 import { TokensType } from '../application/tokensType.dto';
 import { ApiErrorResultDto } from '../../../common/api-error-result.dto';
 import { TokenTypeSwaggerDto } from '../../../swagger/token-type-swagger.dto';
-import { ApiBearerAuth, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { RecoveryCommand } from '../application/use-cases/handlers/recovery.handler';
+import { NewPasswordCommand } from '../application/use-cases/handlers/new-password.handler';
+import { LoginCommand } from '../application/use-cases/handlers/login.handler';
+import { RefreshCommand } from '../application/use-cases/handlers/refresh.handler';
+import { ConfirmByCodeCommand } from '../application/use-cases/handlers/confirmation-by-code.handler';
+import { CreateUserCommand } from '../application/use-cases/handlers/create-user.handler';
+import { ResendingCommand } from '../application/use-cases/handlers/resending.handler';
+import { LogoutCommand } from '../application/use-cases/handlers/logout.handler';
 
 @ApiTags('Auth')
 @Controller(`auth`)
 export class AuthController {
-  constructor(private readonly usersQueryRepositories: UsersQueryRepositories, private commandBus: CommandBus) {}
+  constructor(
+    private readonly usersQueryRepositories: UsersQueryRepositories,
+    private commandBus: CommandBus,
+  ) {}
 
   @ApiHeader({ name: 'password-recovery' })
-  @ApiOperation({ summary: 'Password recovery via Email confirmation. Email should be sent with RecoveryCode inside' })
+  @ApiOperation({
+    summary:
+      'Password recovery via Email confirmation. Email should be sent with RecoveryCode inside',
+  })
   @ApiResponse({ status: 204, description: 'success' })
   @ApiResponse({ status: 400, description: 'Incorrect input data by field' })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(204)
   @Post(`/password-recovery`)
   async recovery(@Body() emailInputModel: EmailRecoveryDto): Promise<boolean> {
@@ -46,7 +71,10 @@ export class AuthController {
   @ApiOperation({ summary: 'Confirm Password recovery' })
   @ApiResponse({ status: 204, description: 'success' })
   @ApiResponse({ status: 400, description: 'Incorrect input data by field' })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(204)
   @Post(`/new-password`)
   async newPassword(@Body() newPasswordInputModel: NewPasswordDto): Promise<boolean> {
@@ -55,9 +83,16 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Try login user to the system' })
   @ApiResponse({ status: 200, description: 'success', type: TokenTypeSwaggerDto })
-  @ApiResponse({ status: 400, description: 'Incorrect input data', type: ApiErrorResultDto })
+  @ApiResponse({
+    status: 400,
+    description: 'Incorrect input data',
+    type: ApiErrorResultDto,
+  })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(200)
   @Post(`/login`)
   async login(
@@ -67,8 +102,13 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<Pick<TokensType, 'accessToken'>> {
     const deviceName = req.headers['user-agent'];
-    const createdToken = await this.commandBus.execute(new LoginCommand(loginInputModel, ip, deviceName));
-    res.cookie('refreshToken', createdToken.refreshToken, { httpOnly: true, secure: true });
+    const createdToken = await this.commandBus.execute(
+      new LoginCommand(loginInputModel, ip, deviceName),
+    );
+    res.cookie('refreshToken', createdToken.refreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
     return { accessToken: createdToken.accessToken };
   }
 
@@ -78,7 +118,10 @@ export class AuthController {
       'be overrode by issued Date of new refresh token',
   })
   @ApiResponse({ status: 200, description: 'success', type: TokenTypeSwaggerDto })
-  @ApiResponse({ status: 401, description: 'JWT refreshToken inside cookie is missing, expired or incorrect' })
+  @ApiResponse({
+    status: 401,
+    description: 'JWT refreshToken inside cookie is missing, expired or incorrect',
+  })
   @SkipThrottle()
   @HttpCode(200)
   @UseGuards(RefreshGuard)
@@ -87,25 +130,51 @@ export class AuthController {
     @PayloadRefresh() payloadRefresh: PayloadType,
     @Res({ passthrough: true }) res,
   ): Promise<Pick<TokensType, 'accessToken'>> {
-    const createdToken = await this.commandBus.execute(new RefreshCommand(payloadRefresh));
-    res.cookie('refreshToken', createdToken.refreshToken, { httpOnly: true, secure: true });
+    const createdToken = await this.commandBus.execute(
+      new RefreshCommand(payloadRefresh),
+    );
+    res.cookie('refreshToken', createdToken.refreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
     return { accessToken: createdToken.accessToken };
   }
 
   @ApiOperation({ summary: 'Confirm registration' })
   @ApiResponse({ status: 204, description: 'Email was verified. Account was activated' })
-  @ApiResponse({ status: 400, description: 'Incorrect input data', type: ApiErrorResultDto })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiResponse({
+    status: 400,
+    description: 'Incorrect input data',
+    type: ApiErrorResultDto,
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(204)
   @Post(`/registration-confirmation`)
   async confirmByCode(@Body() codeInputModel: ConfirmationCodeDto): Promise<boolean> {
     return await this.commandBus.execute(new ConfirmByCodeCommand(codeInputModel));
   }
 
-  @ApiOperation({ summary: 'Registration in the system. Email with confirmation code will be send to passed email address' })
-  @ApiResponse({ status: 204, description: 'An email with a verification code has been sent to the specified email address' })
-  @ApiResponse({ status: 400, description: 'Incorrect input data', type: ApiErrorResultDto })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiOperation({
+    summary:
+      'Registration in the system. Email with confirmation code will be send to passed email address',
+  })
+  @ApiResponse({
+    status: 204,
+    description:
+      'An email with a verification code has been sent to the specified email address',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Incorrect input data',
+    type: ApiErrorResultDto,
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(204)
   @Post(`/registration`)
   async registration(@Body() userInputModel: CreateUserDto): Promise<boolean> {
@@ -114,18 +183,34 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Resend confirmation registration Email if user exists' })
-  @ApiResponse({ status: 204, description: 'An email with a verification code has been sent to the specified email address' })
-  @ApiResponse({ status: 400, description: 'Incorrect input data', type: ApiErrorResultDto })
-  @ApiResponse({ status: 429, description: 'More than 5 attempts from one IP-address during 10 seconds' })
+  @ApiResponse({
+    status: 204,
+    description:
+      'An email with a verification code has been sent to the specified email address',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Incorrect input data',
+    type: ApiErrorResultDto,
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'More than 5 attempts from one IP-address during 10 seconds',
+  })
   @HttpCode(204)
   @Post(`/registration-email-resending`)
   async resending(@Body() resendingInputModel: EmailRecoveryDto): Promise<boolean> {
     return await this.commandBus.execute(new ResendingCommand(resendingInputModel));
   }
 
-  @ApiOperation({ summary: 'In cookie client must send correct refresh Token that will be revoked' })
+  @ApiOperation({
+    summary: 'In cookie client must send correct refresh Token that will be revoked',
+  })
   @ApiResponse({ status: 204, description: 'success' })
-  @ApiResponse({ status: 401, description: 'JWT refreshToken inside cookie is missing, expired or incorrect' })
+  @ApiResponse({
+    status: 401,
+    description: 'JWT refreshToken inside cookie is missing, expired or incorrect',
+  })
   @SkipThrottle()
   @UseGuards(RefreshGuard)
   @HttpCode(204)

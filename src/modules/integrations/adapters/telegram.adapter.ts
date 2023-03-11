@@ -15,10 +15,17 @@ export class TelegramAdapter {
   }
 
   async setWebhook(url: string) {
-    await this.axiosInstance.post(`setWebhook`, {
-      url: url,
+    await this.axiosInstance.post(`setWebhook`, { url: url });
+  }
+}
+
+/*async sendMessage(text: string, recipientId: number) {
+    await this.axiosInstance.post(`sendMessage`, {
+      chat_id: recipientId,
+      text: text,
     });
   }
+
 
   async sendMessage(text: string, recipientId: number) {
     // const text = 'http://www.localhost:5004/blogs/${blogId}';
@@ -34,14 +41,6 @@ export class TelegramAdapter {
       chat_id: 5263550244,
       latitude: 53.893009,
       longitude: 27.567444,
-    });
-  }
-}
-
-/*async sendMessage(text: string, recipientId: number) {
-    await this.axiosInstance.post(`sendMessage`, {
-      chat_id: recipientId,
-      text: text,
     });
   }
 
