@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { BanStatusType, PaginationUsersDto } from '../../api/input-Dto/pagination-Users.dto';
-import { PaginationViewDto } from '../../../../common/pagination-View.dto';
+import { PaginationViewDto } from '../../../../main/common/pagination-View.dto';
 import { MeViewDto } from '../../../auth/infrastructure/me-view.dto';
 import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../../../entities/user.entity';
 import { UserViewModel } from './user-view.dto';
 import { BanInfoType } from './ban-info.dto';
-import { ValidateValue } from '../../../../helpers/validate-value';
+import { ValidateValue } from '../../../../main/helpers/validate-value';
 
 @Injectable()
 export class UsersQueryRepositories {

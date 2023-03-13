@@ -1,12 +1,12 @@
 import { Controller, Get, Query, Param, UseGuards } from '@nestjs/common';
 import { BlogsQueryRepositories } from '../infrastructure/query-repository/blogs-query.repositories';
 import { PaginationBlogDto } from '../../blogger/api/input-dtos/pagination-blog.dto';
-import { PaginationViewDto } from '../../../common/pagination-View.dto';
+import { PaginationViewDto } from '../../../main/common/pagination-View.dto';
 import { PostsQueryRepositories } from '../../posts/infrastructure/query-repositories/posts-query.reposit';
-import { ValidateUuidPipe } from '../../../validators/id-validation-pipe';
+import { ValidateUuidPipe } from '../../../main/validators/id-validation-pipe';
 import { PostViewModel } from '../../posts/infrastructure/query-repositories/post-view.dto';
-import { CurrentUserId } from '../../../decorators/current-user-id.param.decorator';
-import { JwtForGetGuard } from '../../../guards/jwt-auth-bearer-for-get.guard';
+import { CurrentUserId } from '../../../main/decorators/current-user-id.param.decorator';
+import { JwtForGetGuard } from '../../../main/guards/jwt-auth-bearer-for-get.guard';
 import { SkipThrottle } from '@nestjs/throttler';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BlogViewModel } from '../infrastructure/query-repository/blog-view.dto';

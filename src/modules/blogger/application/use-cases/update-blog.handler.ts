@@ -3,7 +3,7 @@ import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositor
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 import { UpdateBlogDto } from '../../api/input-dtos/update-blog.dto';
 
 export class UpdateBlogCommand {

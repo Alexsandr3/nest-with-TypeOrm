@@ -6,7 +6,7 @@ import { Question } from '../../../../entities/question.entity';
 import { Answer } from '../../../../entities/answer.entity';
 import { AnswerViewModel, GamePlayerProgressViewModel, GameViewModel, PLayerViewModel } from './game-view.dto';
 import { QuestionViewModel } from '../../../sa/infrastructure/query-reposirory/question-for-sa-view.dto';
-import { PaginationViewDto } from '../../../../common/pagination-View.dto';
+import { PaginationViewDto } from '../../../../main/common/pagination-View.dto';
 import { PaginationQuizDto } from '../../api/input-dtos/pagination-quiz.dto';
 import { StatisticGameView } from './statistic-game-view.dto';
 import { Columns, PaginationQuizTopDto } from '../../api/input-dtos/pagination-quiz-top.dto';

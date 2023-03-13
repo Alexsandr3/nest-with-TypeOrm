@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
 import { S3StorageAdapter } from '../../domain/s3-storage-adapter.service';
 import { BlogsQueryRepositories } from '../../../blogs/infrastructure/query-repository/blogs-query.repositories';

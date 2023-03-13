@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColum
 import { Player } from './player.entity';
 import { Question } from './question.entity';
 import { AnswerStatusesType } from './answer.entity';
-import { ForbiddenExceptionMY } from '../helpers/My-HttpExceptionFilter';
+import { ForbiddenExceptionMY } from '../main/helpers/My-HttpExceptionFilter';
 
 export enum GameStatusesType {
   PendingSecondPlayer = 'PendingSecondPlayer',

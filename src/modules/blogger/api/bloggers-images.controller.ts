@@ -7,11 +7,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ValidateUuidPipe } from '../../../validators/id-validation-pipe';
+import { ValidateUuidPipe } from '../../../main/validators/id-validation-pipe';
 import { CommandBus } from '@nestjs/cqrs';
 import { BlogsQueryRepositories } from '../../blogs/infrastructure/query-repository/blogs-query.repositories';
-import { JwtAuthGuard } from '../../../guards/jwt-auth-bearer.guard';
-import { CurrentUserIdBlogger } from '../../../decorators/current-user-id.param.decorator';
+import { JwtAuthGuard } from '../../../main/guards/jwt-auth-bearer.guard';
+import { CurrentUserIdBlogger } from '../../../main/decorators/current-user-id.param.decorator';
 import { PostsQueryRepositories } from '../../posts/infrastructure/query-repositories/posts-query.reposit';
 import { SkipThrottle } from '@nestjs/throttler';
 import {
@@ -22,12 +22,12 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiErrorResultDto } from '../../../common/api-error-result.dto';
+import { ApiErrorResultDto } from '../../../main/common/api-error-result.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BlogImagesViewModel } from '../infrastructure/blog-images-view.dto';
-import { FileSizeValidationImageMainPipe } from '../../../validators/file-size-validation-image-main.pipe';
-import { FileSizeValidationImageWallpaperPipe } from '../../../validators/file-size-validation-image-wallpaper.pipe';
-import { FileSizeValidationImageMainPostPipe } from '../../../validators/file-size-validation-image-main-post.pipe';
+import { FileSizeValidationImageMainPipe } from '../../../main/validators/file-size-validation-image-main.pipe';
+import { FileSizeValidationImageWallpaperPipe } from '../../../main/validators/file-size-validation-image-wallpaper.pipe';
+import { FileSizeValidationImageMainPostPipe } from '../../../main/validators/file-size-validation-image-main-post.pipe';
 import { PostImagesViewModel } from '../infrastructure/post-images-view.dto';
 import { UploadImageWallpaperCommand } from '../application/use-cases/upload-image-wallpaper.handler';
 import { UploadImageMainCommand } from '../application/use-cases/upload-image-main.handler';

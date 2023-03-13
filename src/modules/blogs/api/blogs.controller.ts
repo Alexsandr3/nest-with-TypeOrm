@@ -1,10 +1,10 @@
 import { Controller, Param, UseGuards, Post, Delete, HttpCode } from '@nestjs/common';
-import { ValidateUuidPipe } from '../../../validators/id-validation-pipe';
-import { CurrentUserIdBlogger } from '../../../decorators/current-user-id.param.decorator';
+import { ValidateUuidPipe } from '../../../main/validators/id-validation-pipe';
+import { CurrentUserIdBlogger } from '../../../main/decorators/current-user-id.param.decorator';
 import { SkipThrottle } from '@nestjs/throttler';
 import { ApiBasicAuth, ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { JwtAuthGuard } from '../../../guards/jwt-auth-bearer.guard';
+import { JwtAuthGuard } from '../../../main/guards/jwt-auth-bearer.guard';
 import { SubscriptionToBlogCommand } from '../application/use-cases/subscription-to-blog.handler';
 import { UnsubscriptionToBlogCommand } from '../application/use-cases/unsubscription-to-blog.handler';
 

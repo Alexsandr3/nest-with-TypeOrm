@@ -1,4 +1,4 @@
-import { PaginationViewDto } from '../common/pagination-View.dto';
+import { PaginationViewDto } from '../main/common/pagination-View.dto';
 import { applyDecorators, Type } from '@nestjs/common';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import { UnauthorizedExceptionMY } from '../../../helpers/My-HttpExceptionFilter';
+import { UnauthorizedExceptionMY } from '../../../main/helpers/My-HttpExceptionFilter';
 import { PayloadType } from './payloadType';
 import { ConfigService } from '@nestjs/config';
-import { ConfigType } from '../../../config/configuration';
+import { ConfigType } from '../../../main/config/configuration';
 import { TokensType } from './tokensType.dto';
 
 @Injectable()

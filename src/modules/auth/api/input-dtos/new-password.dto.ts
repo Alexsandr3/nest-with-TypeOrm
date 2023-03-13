@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator';
-import { Trim } from '../../../../helpers/decorator-trim';
+import { Trim } from '../../../../main/helpers/decorator-trim';
 
 export class NewPasswordDto {
   /**

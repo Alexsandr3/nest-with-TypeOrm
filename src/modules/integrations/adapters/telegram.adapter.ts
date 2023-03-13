@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const axios = require('axios');
-import { ConfigType } from '../../../config/configuration';
+import { ConfigType } from '../../../main/config/configuration';
 
 @Injectable()
 export class TelegramAdapter {

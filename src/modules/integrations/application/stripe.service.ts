@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { ConfigService } from '@nestjs/config';
-import { ConfigType } from '../../../config/configuration';
+import { ConfigType } from '../../../main/config/configuration';
 
 @Injectable()
 export class StripeService {

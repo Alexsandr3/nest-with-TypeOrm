@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { NotFoundExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 import { BlogsRepositories } from '../../infrastructure/blogs.repositories';
 import { UsersRepositories } from '../../../sa-users/infrastructure/users-repositories';
 

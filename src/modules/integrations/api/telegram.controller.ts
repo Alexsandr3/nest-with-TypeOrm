@@ -2,8 +2,8 @@ import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common
 import { TelegramUpdateMessage } from '../types/telegram-update-message-type';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../guards/jwt-auth-bearer.guard';
-import { CurrentUserIdBlogger } from '../../../decorators/current-user-id.param.decorator';
+import { JwtAuthGuard } from '../../../main/guards/jwt-auth-bearer.guard';
+import { CurrentUserIdBlogger } from '../../../main/decorators/current-user-id.param.decorator';
 import { TelegramUpdateMessageCommand } from '../application/use-cases/telegram-update-message.handler';
 import { AuthBotLinkCommand } from '../application/use-cases/auth-bot-link.handler';
 

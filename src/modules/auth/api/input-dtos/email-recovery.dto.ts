@@ -1,5 +1,5 @@
 import { IsEmail, IsString } from 'class-validator';
-import { Trim } from '../../../../helpers/decorator-trim';
+import { Trim } from '../../../../main/helpers/decorator-trim';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EmailRecoveryDto {

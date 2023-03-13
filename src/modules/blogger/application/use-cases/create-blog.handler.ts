@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
 import { UsersRepositories } from '../../../sa-users/infrastructure/users-repositories';
-import { UnauthorizedExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { UnauthorizedExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 import { Blog } from '../../../../entities/blog.entity';
 import { CreateBlogDto } from '../../api/input-dtos/create-blog.dto';
 

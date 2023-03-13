@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { NotFoundExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 import { Comment } from '../../../../entities/comment.entity';
 import { LikeStatusType } from '../../../../entities/like-post.entity';
 import { LikeComment } from '../../../../entities/like-comment.entity';

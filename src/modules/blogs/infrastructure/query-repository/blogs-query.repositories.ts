@@ -4,9 +4,9 @@ import {
   BlogOwnerInfoType,
   BlogViewForSaModel,
 } from './blog-view-for-sa.dto';
-import { PaginationViewDto } from '../../../../common/pagination-View.dto';
+import { PaginationViewDto } from '../../../../main/common/pagination-View.dto';
 import { PaginationBlogDto } from '../../../blogger/api/input-dtos/pagination-blog.dto';
-import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { NotFoundExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 import { UsersForBanBlogView } from '../../../sa-users/infrastructure/query-reposirory/user-ban-for-blog-view.dto';
 import { Blog } from '../../../../entities/blog.entity';
 import { InjectRepository } from '@nestjs/typeorm';

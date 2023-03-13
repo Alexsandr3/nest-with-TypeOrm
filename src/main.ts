@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { ConfigType } from './config/configuration';
-import { createdApp } from './helpers/createdApp';
+import { ConfigType } from './main/config/configuration';
+import { createdApp } from './main/helpers/createdApp';
 import { createWriteStream } from 'fs';
 import { get } from 'http';
 import { getSetupSwagger } from './swagger/getSetupSwagger';
 import { TelegramAdapter } from './modules/integrations/adapters/telegram.adapter';
 import process from 'process';
 import * as ngrok from 'ngrok';
-import getLogLevels from './utils/getLogLevels';
+import getLogLevels from './main/utils/getLogLevels';
 
 async function connectToNgrok(port: number) {
   return await ngrok.connect({ authtoken: process.env.TOKEN_NGROK, addr: port });

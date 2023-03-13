@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PostViewModel } from './post-view.dto';
 import { ExtendedLikesInfoViewModel } from './likes-Info-view.dto';
-import { PaginationViewDto } from '../../../../common/pagination-View.dto';
-import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { PaginationViewDto } from '../../../../main/common/pagination-View.dto';
+import { NotFoundExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 import {
   BloggerCommentsViewModel,
   CommentatorInfoModel,

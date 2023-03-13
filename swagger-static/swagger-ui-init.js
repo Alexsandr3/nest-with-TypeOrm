@@ -2441,8 +2441,69 @@ window.onload = function() {
         }
       },
       "/posts/{postId}/comments": {
+        "post": {
+          "operationId": "PostsController_createComment",
+          "summary": "Create new comment",
+          "description": "",
+          "parameters": [
+            {
+              "name": "postId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCommentDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CommentViewModel"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "The inputModel has incorrect values",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResultDto"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found post"
+            }
+          },
+          "tags": [
+            "Posts"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        },
         "get": {
-          "operationId": "PostsController_findComments",
+          "operationId": "PostsGetController_findComments",
           "summary": "Returns all comments for specified post with pagination",
           "description": "",
           "parameters": [
@@ -2528,72 +2589,11 @@ window.onload = function() {
           "tags": [
             "Posts"
           ]
-        },
-        "post": {
-          "operationId": "PostsController_createComment",
-          "summary": "Create new comment",
-          "description": "",
-          "parameters": [
-            {
-              "name": "postId",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateCommentDto"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "success",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/CommentViewModel"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "The inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResultDto"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Not found post"
-            }
-          },
-          "tags": [
-            "Posts"
-          ],
-          "security": [
-            {
-              "bearer": []
-            }
-          ]
         }
       },
       "/posts": {
         "get": {
-          "operationId": "PostsController_findAll",
+          "operationId": "PostsGetController_findAll",
           "summary": "Returns all posts with pagination",
           "description": "",
           "parameters": [
@@ -2691,7 +2691,7 @@ window.onload = function() {
       },
       "/posts/{id}": {
         "get": {
-          "operationId": "PostsController_findOne",
+          "operationId": "PostsGetController_findOne",
           "summary": "Return post by id",
           "description": "",
           "parameters": [
@@ -4303,6 +4303,20 @@ window.onload = function() {
             "likeStatus"
           ]
         },
+        "CreateCommentDto": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "description": "content for create Comment",
+              "minLength": 20,
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "content"
+          ]
+        },
         "CommentViewModel": {
           "type": "object",
           "properties": {
@@ -4332,20 +4346,6 @@ window.onload = function() {
             "userLogin",
             "createdAt",
             "likesInfo"
-          ]
-        },
-        "CreateCommentDto": {
-          "type": "object",
-          "properties": {
-            "content": {
-              "type": "string",
-              "description": "content for create Comment",
-              "minLength": 20,
-              "maxLength": 300
-            }
-          },
-          "required": [
-            "content"
           ]
         },
         "UpdateCommentDto": {

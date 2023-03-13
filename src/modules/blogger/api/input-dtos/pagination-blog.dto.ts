@@ -1,5 +1,5 @@
 import { IsOptional } from 'class-validator';
-import { PaginationDto } from '../../../../common/pagination.dto';
+import { PaginationDto } from '../../../../main/common/pagination.dto';
 
 export class PaginationBlogDto extends PaginationDto {
   /**

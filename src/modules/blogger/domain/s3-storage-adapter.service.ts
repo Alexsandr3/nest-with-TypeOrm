@@ -6,7 +6,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import { ConfigService } from '@nestjs/config';
-import { ConfigType } from '../../../config/configuration';
+import { ConfigType } from '../../../main/config/configuration';
 
 @Injectable()
 export class S3StorageAdapter {

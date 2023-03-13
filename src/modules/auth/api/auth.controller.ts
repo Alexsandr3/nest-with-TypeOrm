@@ -15,17 +15,17 @@ import { LoginDto } from './input-dtos/login.dto';
 import { EmailRecoveryDto } from './input-dtos/email-recovery.dto';
 import { NewPasswordDto } from './input-dtos/new-password.dto';
 import { PayloadType } from '../application/payloadType';
-import { RefreshGuard } from '../../../guards/jwt-auth-refresh.guard';
+import { RefreshGuard } from '../../../main/guards/jwt-auth-refresh.guard';
 import { Response } from 'express';
-import { PayloadRefresh } from '../../../decorators/payload-refresh.param.decorator';
-import { JwtAuthGuard } from '../../../guards/jwt-auth-bearer.guard';
+import { PayloadRefresh } from '../../../main/decorators/payload-refresh.param.decorator';
+import { JwtAuthGuard } from '../../../main/guards/jwt-auth-bearer.guard';
 import { UsersQueryRepositories } from '../../sa-users/infrastructure/query-reposirory/users-query.reposit';
 import { MeViewDto } from '../infrastructure/me-view.dto';
-import { CurrentUserId } from '../../../decorators/current-user-id.param.decorator';
+import { CurrentUserId } from '../../../main/decorators/current-user-id.param.decorator';
 import { SkipThrottle } from '@nestjs/throttler';
 import { CommandBus } from '@nestjs/cqrs';
 import { TokensType } from '../application/tokensType.dto';
-import { ApiErrorResultDto } from '../../../common/api-error-result.dto';
+import { ApiErrorResultDto } from '../../../main/common/api-error-result.dto';
 import { TokenTypeSwaggerDto } from '../../../swagger/token-type-swagger.dto';
 import {
   ApiBearerAuth,
@@ -34,14 +34,14 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RecoveryCommand } from '../application/use-cases/handlers/recovery.handler';
-import { NewPasswordCommand } from '../application/use-cases/handlers/new-password.handler';
-import { LoginCommand } from '../application/use-cases/handlers/login.handler';
-import { RefreshCommand } from '../application/use-cases/handlers/refresh.handler';
-import { ConfirmByCodeCommand } from '../application/use-cases/handlers/confirmation-by-code.handler';
-import { CreateUserCommand } from '../application/use-cases/handlers/create-user.handler';
-import { ResendingCommand } from '../application/use-cases/handlers/resending.handler';
-import { LogoutCommand } from '../application/use-cases/handlers/logout.handler';
+import { RecoveryCommand } from '../application/use-cases/recovery.handler';
+import { NewPasswordCommand } from '../application/use-cases/new-password.handler';
+import { LoginCommand } from '../application/use-cases/login.handler';
+import { RefreshCommand } from '../application/use-cases/refresh.handler';
+import { ConfirmByCodeCommand } from '../application/use-cases/confirmation-by-code.handler';
+import { CreateUserCommand } from '../application/use-cases/create-user.handler';
+import { ResendingCommand } from '../application/use-cases/resending.handler';
+import { LogoutCommand } from '../application/use-cases/logout.handler';
 
 @ApiTags('Auth')
 @Controller(`auth`)

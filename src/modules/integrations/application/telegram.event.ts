@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { BlogsRepositories } from '../../blogs/infrastructure/blogs.repositories';
 import { ConfigService } from '@nestjs/config';
-import { ConfigType } from '../../../config/configuration';
+import { ConfigType } from '../../../main/config/configuration';
 import * as https from 'https';
 import { OnEvent } from '@nestjs/event-emitter';
 

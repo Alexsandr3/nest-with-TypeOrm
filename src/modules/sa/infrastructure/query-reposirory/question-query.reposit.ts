@@ -3,7 +3,7 @@ import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionForSaViewModel } from './question-for-sa-view.dto';
 import { Question } from '../../../../entities/question.entity';
-import { PaginationViewDto } from '../../../../common/pagination-View.dto';
+import { PaginationViewDto } from '../../../../main/common/pagination-View.dto';
 import { PaginationQuestionDto } from '../../api/input-dtos/pagination-Question.dto';
 
 @Injectable()

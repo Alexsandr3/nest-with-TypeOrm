@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import path from 'node:path';
 import fs from 'node:fs';
-import { ensureDirSync } from '../../../utils/fs-utils';
+import { ensureDirSync } from '../../../main/utils/fs-utils';
 
 @Injectable()
 export class BloggersService {

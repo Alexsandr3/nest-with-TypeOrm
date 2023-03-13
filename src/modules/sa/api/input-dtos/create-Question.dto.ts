@@ -1,6 +1,6 @@
 import { IsString, Length } from 'class-validator';
-import { Trim } from '../../../../helpers/decorator-trim';
-import { ArrayStrings } from '../../../../helpers/decorator-Array-strings';
+import { Trim } from '../../../../main/helpers/decorator-trim';
+import { ArrayStrings } from '../../../../main/helpers/decorator-Array-strings';
 
 export class CreateQuestionDto {
   /**

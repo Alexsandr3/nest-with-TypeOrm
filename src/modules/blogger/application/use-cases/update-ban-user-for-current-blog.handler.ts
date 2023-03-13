@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
 import { UsersRepositories } from '../../../sa-users/infrastructure/users-repositories';
 import { BannedBlogUser } from '../../../../entities/banned-blog-user.entity';

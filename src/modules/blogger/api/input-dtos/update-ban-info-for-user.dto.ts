@@ -1,6 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
-import { IsUuidCustom } from '../../../../helpers/decorator-IsUuid';
-import { Trim } from '../../../../helpers/decorator-trim';
+import { IsUuidCustom } from '../../../../main/helpers/decorator-IsUuid';
+import { Trim } from '../../../../main/helpers/decorator-trim';
 
 export class UpdateBanInfoForUserDto {
   /**

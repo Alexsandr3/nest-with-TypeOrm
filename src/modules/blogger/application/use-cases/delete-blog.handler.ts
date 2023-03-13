@@ -3,7 +3,7 @@ import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositor
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 
 export class DeleteBlogCommand {
   constructor(public readonly blogId: string, public readonly userId: string) {}

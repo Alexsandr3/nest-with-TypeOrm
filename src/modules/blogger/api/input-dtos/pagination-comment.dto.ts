@@ -1,4 +1,4 @@
-import { PaginationDto } from '../../../../common/pagination.dto';
+import { PaginationDto } from '../../../../main/common/pagination.dto';
 
 export class PaginationCommentDto extends PaginationDto {
   isSorByDefault(): string {

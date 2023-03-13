@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersRepositories } from '../../../sa-users/infrastructure/users-repositories';
-import { NotFoundExceptionMY } from '../../../../helpers/My-HttpExceptionFilter';
+import { NotFoundExceptionMY } from '../../../../main/helpers/My-HttpExceptionFilter';
 
 export class AuthBotLinkCommand {
   constructor(public readonly userId: string) {}

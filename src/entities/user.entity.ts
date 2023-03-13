@@ -9,7 +9,7 @@ import { Comment } from './comment.entity';
 import { LikePost } from './like-post.entity';
 import { LikeComment } from './like-comment.entity';
 import { SubscriptionToBlog } from './subscription.entity';
-import { NotFoundExceptionMY } from '../helpers/My-HttpExceptionFilter';
+import { NotFoundExceptionMY } from '../main/helpers/My-HttpExceptionFilter';
 
 @Entity()
 export class User {

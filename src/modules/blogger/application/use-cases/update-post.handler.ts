@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 import { PostsRepositories } from '../../../posts/infrastructure/posts-repositories';
 import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
 import { CreatePostDto } from '../../../posts/api/input-Dtos/create-post.dto';

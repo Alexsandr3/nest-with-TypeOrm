@@ -5,7 +5,7 @@ import { PostsQueryRepositories } from '../../../posts/infrastructure/query-repo
 import {
   ForbiddenExceptionMY,
   NotFoundExceptionMY,
-} from '../../../../helpers/My-HttpExceptionFilter';
+} from '../../../../main/helpers/My-HttpExceptionFilter';
 import { BlogsRepositories } from '../../../blogs/infrastructure/blogs.repositories';
 import { Post } from '../../../../entities/post.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
